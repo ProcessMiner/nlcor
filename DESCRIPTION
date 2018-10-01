@@ -1,0 +1,23 @@
+Package: nlcor
+Type: Package
+Title: Compute Nonlinear Correlations
+Version: 0.1.0
+Authors@R: c(
+    person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
+    person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
+    )
+Description: An implementation of an efficient heuristic to compute the nonlinear
+    correlations between numeric vectors. The heuristic works by adaptively
+    identifying multiple local regions of linear correlations to estimate the
+    overall nonlinear correlation. The nonlinear correlations estimate has
+    various applications in data exploration and variable selection for
+    nonlinear models.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2
+Suggests: 
+    testthat
+RoxygenNote: 6.1.0
+Depends: R (>= 3.5.1)
