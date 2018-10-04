@@ -20,7 +20,7 @@ Compute nonlinear correlation using spatial sampling. Local linear
 correlations are computed at the samples and combined.
 }
 \examples{
-SampleCor(x, y, s = 0.2)
+nlcor(x, y)
 
 }
 \keyword{correlation}

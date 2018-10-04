@@ -9,17 +9,24 @@
 #' @keywords nonlinear correlation
 #' @export
 #' @examples
-#' SampleCor(x, y, s = 0.2)
+#' nlcor(x, y)
+#' nlcor(x, y, refine = 0.5)
+#' nlcor(x, y, plt = T)
 #'
-nlcor <- function(x, y) {
+nlcor <- function(x, y, refine = 0.5, plt = F) {
+
+  if(refine >= 1.0) {
+    stop("Value of refine cannot be >= 1.0.")
+  }
+
   maxCor <- 0
   adjusted.p.value <- NA
   segment.cor <- NULL
   best.s <- NULL
 
-  s.size <- FindSegmentSize(l = length(x))
+  s.size <- FindSegmentSize(l = length(x), refine = refine) # * refine
 
-  for(s in seq(s.size, 1, s.size)) {
+  for(s in seq(s.size, 1, s.size * (1 - refine))) {
     sampleCor <- SampleCor(x, y, s)
     netCor <- NetCor(cors = sampleCor$cor, pvalues = sampleCor$pvalue)
 
@@ -31,15 +38,22 @@ nlcor <- function(x, y) {
     }
   }
 
-  cor.plot <- PlotNlcor(x = x,
-                        y = y,
-                        segment.cor = segment.cor,
-                        s = best.s)
-  return(list(cor.estimate = maxCor,
-              cor.plot = cor.plot,
-              adjusted.p.value = adjusted.p.value,
-              segments = list(segment.cor = segment.cor,
-                              segment.size = best.s)))
+  if(plt) {
+    cor.plot <- PlotNlcor(x = x,
+                          y = y,
+                          segment.cor = segment.cor,
+                          s = best.s)
+    return(list(cor.estimate = maxCor,
+                adjusted.p.value = adjusted.p.value,
+                cor.plot = cor.plot
+               )
+            )
+  } else {
+    return(list(cor.estimate = maxCor,
+                adjusted.p.value = adjusted.p.value
+                )
+            )
+  }
 }
 
 
@@ -102,7 +116,7 @@ NetCor <- function(cors, pvalues, p.threshold = 0.05) {
   }
 
   return(list(cor.estimate = mean(abs(cors)),
-              adjusted.p.value = mean(pvalues, na.rm = T),
+              adjusted.p.value = sum(pvalues, na.rm = T),  # we sum the p values, not average it
               segment.cor = list(cor = cors,
                                  p.value = pvalues)))
 }

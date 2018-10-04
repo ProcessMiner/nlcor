@@ -7,7 +7,6 @@ PlotNlcor <- function(x, y, segment.cor, s) {
   l <- length(x)
 
   segments <- Segment(l = l, s = s)
-
   seg <- segments[[1]]
 
   for(i in 2:length(segments)) {
@@ -46,16 +45,17 @@ PlotNlcor <- function(x, y, segment.cor, s) {
   }
 
   p <- ggplot() +
-    geom_line(data = df.fit, aes(x = x, y = fit, colour = "#5eb252")) +
-    geom_point(data = df, aes(x = x, y = y, colour = "#7e7e7e")) +
+    geom_point(data = df, aes(x = x, y = y)) +
+    geom_line(data = df.fit, aes(x = x, y = fit, colour = "red")) +
     xlab("x") +
     ylab("y") +
-    # scale_color_manual(values=c("#7e7e7e", "#5eb252")) +
     theme_bw() +
     theme(panel.border = element_blank(),
           axis.line = element_line(colour = "#000000"),
-          axis.text = element_text(size = 18),
-          axis.title = element_text(size = 18),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          axis.text = element_text(size = 12),
+          axis.title = element_text(size = 12),
           legend.position = "none"
           )
   return(p)

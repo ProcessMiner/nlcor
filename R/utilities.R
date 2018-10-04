@@ -11,6 +11,7 @@
 Segment <- function(l, s) {
 
   windowLen <- floor(s * l)
+
   numSegments <- l %/% windowLen
   segments <- list()
 
@@ -23,7 +24,13 @@ Segment <- function(l, s) {
   }
 
   if(l %% windowLen != 0) {
-    segments[[length(segments) + 1]] <- low:l
+    seg <- low:l
+    if(length(seg) <= 5) {
+      # Merge with the last segment
+      segments[[length(segments)]] <- c(segments[[length(segments)]], seg)
+    } else {
+      segments[[length(segments) + 1]] <- seg
+    }
   }
 
   return(segments)
@@ -37,17 +44,22 @@ Segment <- function(l, s) {
 #' @return A floating number \code{s} between 0 and 1.
 #' @export
 #' @examples
-#' FindSegmentSize(l = 100)
+#' FindSegmentSize(l = 100, refine = 0.9)
 #'
-FindSegmentSize <- function(l) {
-  s <- 0.05
+FindSegmentSize <- function(l, refine) {
+  s <- 0.05 * (1 - refine)
   seg.size <- floor(s * l)
 
+  segmentAdjusted <- F
   while(seg.size < 5) {
-    s <- s + 0.05
+    segmentAdjusted <- T
+    s <- s + 0.05 * (1 - refine)
     seg.size <- floor(s * l)
   }
 
+  if(segmentAdjusted) {
+    warning("Refinement too high or data is small. Adjusting computation.")
+  }
   return(s)
 }
 
