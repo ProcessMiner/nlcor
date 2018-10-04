@@ -1,3 +1,13 @@
+Purpose
+-------
+
+Estimate nonlinear correlations using `nlcor`. Yields a correlation
+estimate between 0 and 1, and the adjusted p value. The p value
+indicates if the estimated correlation is statistically significant.
+
+Description
+-----------
+
 Correlations are commonly used in various data mining applications.
 Typically linear correlations are estimated. However, in many instances
 the data has a nonlinear correlation but little to no linear
@@ -29,14 +39,13 @@ there is a visible nonlinear correlation between them. This package
 contains the data for these examples and can be used for testing the
 package.
 
-Example 1.
-----------
+### Example 1.
 
 A data with cyclic nonlinear correlation.
 
     plot(x1, y1)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-1.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-1.1-1.png" style="display: block; margin: auto;" />
 
 The linear correlation of the data is,
 
@@ -53,18 +62,17 @@ correlation using `nlcor`.
     #> [1] 4.306386e-44
     print(c$cor.plot)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-1.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-1.2-1.png" style="display: block; margin: auto;" />
 
 The plot shows the piecewise linear correlations present in the data.
 
-Example 2.
-----------
+### Example 2.
 
 A data with non-uniform piecewise linear correlations.
 
     plot(x2, y2)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-2.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-2.1-1.png" style="display: block; margin: auto;" />
 
 The linear correlation of the data is,
 
@@ -88,20 +96,19 @@ We estimate the nonlinear correlation using `nlcor`.
     #> [1] 6.981938e-49
     print(c$cor.plot)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-2.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-2.2-1.png" style="display: block; margin: auto;" />
 
 It is visible from the plot that `nlcor` could estimate the piecewise
 correlations in a non-uniform scenario. Also, the nonlinear correlation
 comes out to be higher than the linear correlation.
 
-Example 3.
-----------
+### Example 3.
 
 A data with higher and multiple frequency variations.
 
     plot(x3, y3)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-3.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.1-1.png" style="display: block; margin: auto;" />
 
 The linear correlation of the data is,
 
@@ -123,7 +130,7 @@ Under default settings, the output of `nlcor` will be,
     #> [1] 1.204281e-37
     print(c$cor.plot)
 
-<img src="nlcor_files/figure-markdown_strict/Figure-3.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.2-1.png" style="display: block; margin: auto;" />
 
 As can be seen in the figure, `nlcor` overlooked some of the local
 relationships. We can refine the correlation estimation by changing the
@@ -144,7 +151,7 @@ In this data, we rerun the correlation estimation with `refine = 0.9`.
     print(c$cor.plot)
     #> Warning: Removed 148 rows containing missing values (geom_path).
 
-<img src="nlcor_files/figure-markdown_strict/Figure-3.3-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.3-1.png" style="display: block; margin: auto;" />
 
 As can be seen in the figure, `nlcor` could identify the granular
 piecewise correlations. In this data, the p value still remains
