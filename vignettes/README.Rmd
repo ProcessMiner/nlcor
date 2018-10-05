@@ -19,6 +19,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(nlcor)
+library(ggplot2)
+library(reshape2)
 ```
 
 ## Purpose 
