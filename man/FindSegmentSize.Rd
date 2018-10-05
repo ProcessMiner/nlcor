@@ -4,7 +4,7 @@
 \alias{FindSegmentSize}
 \title{Find the segmentation size.}
 \usage{
-FindSegmentSize(l)
+FindSegmentSize(l, refine)
 }
 \arguments{
 \item{l}{An integer.}
@@ -16,6 +16,6 @@ A floating number \code{s} between 0 and 1.
 Identify a segment size that yields at least 5 record.
 }
 \examples{
-FindSegmentSize(l = 100)
+FindSegmentSize(l = 100, refine = 0.9)
 
 }

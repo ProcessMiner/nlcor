@@ -4,14 +4,31 @@
 #' correlations are computed at the samples and combined.
 #' @param x A numeric vector. NAs are not allowed. The length of the vector should be more than 10.
 #' @param y A numeric vector. NAs are not allowed. Length should be same as x.
-#' @return The output is a list containing the nonlinear correlation \code{estimate}.
-#' The estimate is between 0 and 1. An adjusted \code{p.value} is also returned.
+#' @param refine Optional. Default value 0.5. Increase the value to increase
+#' the granularity of local correlation computation.
+#' @param plt Optional. Default value FALSE. Set TRUE to return ggplot2 object
+#' for the data correlation visualization.
+#' @return The output is a list containing the nonlinear correlation \code{cor.estimate}, \code{adjusted.p.value}, and \code{cor.plot}. \code{cor.estimate}
+#' is between 0 and 1 (a negative nonlinear correlation is undefined). The
+#' \code{adjusted.p.value} shows the statistical significance of the
+#' \code{cor.estimate}. If \code{adjusted.p.value > 0.05}, the nonlinear
+#' correlation estimate can be considered as noise (statistically not
+#' significant). If \code{plt = T}, \code{ggplot2} object is return for
+#' plotting the identified local linear correlations in the data.
 #' @keywords nonlinear correlation
+#' @seealso \code{\link{cor}}
 #' @export
 #' @examples
-#' nlcor(x, y)
-#' nlcor(x, y, refine = 0.5)
-#' nlcor(x, y, plt = T)
+#' library(nlcor)
+#' plot(x1, y1)
+#' c <- nlcor(x1, y1)
+#' c
+#' c <- nlcor(x2, y2, plt = T)
+#' print(c$cor.plot)
+#' c <- nlcor(x3, y3, refine = 0.9, plt = T)
+#' c$cor.estimate
+#' c$adjusted.p.value
+#' print(c$cor.plot)
 #'
 nlcor <- function(x, y, refine = 0.5, plt = F) {
 
@@ -66,7 +83,6 @@ nlcor <- function(x, y, refine = 0.5, plt = F) {
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
 #' @return \code{list(cor, pvalue)} containing the correlations and its pvalue for each segment.
 #' @keywords nonlinear correlation, sample
-#' @export
 #' @examples
 #' SampleCor(x, y, s = 0.2)
 #'
@@ -99,7 +115,6 @@ SampleCor <- function(x, y, s) {
 #' @param p.threshold The overall threshold of p value, also known as the significance level.
 #' @return The net correlation estimate, \code{cor.estimate}, and a list containing
 #' the adjusted correlations and pvalues for each "linear" segment.
-#' @export
 #' @examples
 #' cors <- c(-0.70, 0.93, -0.79, 0.91)
 #' pvalues <- c(0.004, 0.0006, 0.0007, 0.009)

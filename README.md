@@ -9,35 +9,36 @@ Description
 -----------
 
 Correlations are commonly used in various data mining applications.
-Typically linear correlations are estimated. However, in many instances
-the data has a nonlinear correlation but little to no linear
-correlation. If we are performing data exploration using automated
-techniques on several variables, such nonlinearly correlated variables
-can easily be overlooked.
+Typically linear correlations are estimated. However, the data may have
+a nonlinear correlation but little to no linear correlation. If, for
+example, we are performing data exploration using automated techniques
+on many variables, such nonlinearly correlated variables can easily be
+overlooked.
 
 Nonlinear correlations are quite common in real data. Due to this,
-nonlinear models, such as SVM, are employed regression, classification,
-etc. However, there are not many approaches to estimate nonlinear
-correlations for application in data exploration, variable selection,
-and other area.
+nonlinear models, such as SVM, are employed for regression,
+classification, etc. However, there are not many approaches to estimate
+nonlinear correlations. If developed, it will find application in data
+exploration, variable selection, and other areas.
 
-In this package, we provide an implementation of nonlinear correlation
-estimation using an adaptive local linear correlation computation. The
-function `nlcor` returns the nonlinear correlation estimate, the
-corresponding adjusted p value, and an optional plot visualizing the
-nonlinear relationships.
+In this package, we provide an implementation of a nonlinear correlation
+estimation method using an adaptive local linear correlation computation
+in `nlcor`. The function `nlcor` returns the nonlinear correlation
+estimate, the corresponding adjusted p value, and an optional plot
+visualizing the nonlinear relationships.
 
 The correlation estimate will be between 0 and 1. The higher the value
-the more nonlinear correlation. Unlike linear correlations, a negative
-value is not valid here. Due to multiple local correlation computations,
-the net p value of the correlation estimate is adjusted (to avoid false
-positives). The plot visualizes the local linear correlations.
+the more is the nonlinear correlation. Unlike linear correlations, a
+negative value is not valid here. Due to multiple local correlation
+computations, the net p value of the correlation estimate is adjusted
+(to avoid false positives). The plot visualizes the local linear
+correlations.
 
-In following, we will show its usage with few examples. In the given
-examples, the linear correlations between `x` and `y` is small, however,
-there is a visible nonlinear correlation between them. This package
-contains the data for these examples and can be used for testing the
-package.
+In the following, we will show its usage with a few examples. In the
+given examples, the linear correlations between `x` and `y` is small,
+however, there is a visible nonlinear correlation between them. This
+package contains the data for these examples and can be used for testing
+the package.
 
 ### Example 1.
 
@@ -81,11 +82,11 @@ The linear correlation of the data is,
 
 The linear correlation is quite high in this data. However, there is
 significant and higher nonlinear correlation present in the data. This
-data is a emulates the scenario where the correlation changes its
-direction after a point. Sometimes that change point is in the middle
-causing the linear correlation to be close to zero. Here we show example
-when the change point is off center to show that the implementation
-works in non-uniform cases.
+data emulates the scenario where the correlation changes its direction
+after a point. Sometimes that change point is in the middle causing the
+linear correlation to be close to zero. Here we show an example when the
+change point is off center to show that the implementation works in
+non-uniform cases.
 
 We estimate the nonlinear correlation using `nlcor`.
 
@@ -136,8 +137,8 @@ As can be seen in the figure, `nlcor` overlooked some of the local
 relationships. We can refine the correlation estimation by changing the
 `refine` parameter. The default value of `refine` is set as 0.5. It can
 be set as any value between `0` and `1`. A higher value enforces higher
-refinement. However, higher refinement adversaly affects the p value.
-Meaning, the resultant correlation estimate maybe statistically
+refinement. However, higher refinement adversely affects the p value.
+Meaning, the resultant correlation estimate may be statistically
 insignificant (similar to overfitting). Therefore, it is recommended to
 avoid over refinement.
 
@@ -155,4 +156,24 @@ In this data, we rerun the correlation estimation with `refine = 0.9`.
 
 As can be seen in the figure, `nlcor` could identify the granular
 piecewise correlations. In this data, the p value still remains
-extremely small---the correlation is *statistically significant*.
+extremely small—the correlation is *statistically significant*.
+
+Summary
+-------
+
+This package provides an implementation of an efficient heuristic to
+compute the nonlinear correlations between numeric vectors. The
+heuristic works by adaptively identifying multiple local regions of
+linear correlations to estimate the overall nonlinear correlation. Its
+usages are demonstrated here with few examples.
+
+------------------------------------------------------------------------
+
+Support
+-------
+
+Chitta Ranjan <cranjan@processminer.com>
+
+Vahab Najari <vnajari@processminer.com>
+
+Visit &lt;www.processminer.com&gt; for further information.

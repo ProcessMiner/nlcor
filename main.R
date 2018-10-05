@@ -15,6 +15,3 @@ print(nonlinear.cor)
 nonlinear.cor <- nlcor(x3, y3, refine = 0.9, plt = T)
 print(nonlinear.cor)
 
-nonlinear.cor <- nlcor(x3, y3, refine = 0.1, plt = T)
-print(nonlinear.cor)
-cor(x3, y3)
