@@ -18,20 +18,18 @@ the granularity of local correlation computation.}
 for the data correlation visualization.}
 }
 \value{
-The output is a list containing the nonlinear correlation \code{cor.estimate}, \code{adjusted.p.value}, and \code{cor.plot}.
+The output is a list containing the nonlinear correlation \code{cor.estimate}, \code{adjusted.p.value}, and \code{cor.plot}. \code{cor.estimate}
+is between 0 and 1 (a negative nonlinear correlation is undefined). The
+\code{adjusted.p.value} shows the statistical significance of the
+\code{cor.estimate}. If \code{adjusted.p.value > 0.05}, the nonlinear
+correlation estimate can be considered as noise (statistically not
+significant). If \code{plt = T}, \code{ggplot2} object is return for
+plotting the identified local linear correlations in the data.
 }
 \description{
-Compute Nonlinear Correlation
-}
-\details{
 Compute nonlinear correlation using spatial sampling. Local linear
 correlations are computed at the samples and combined.
 }
-\section{Functions}{
-\itemize{
-\item \code{nlcor}: The estimate is between 0 and 1. An adjusted \code{p.value} is also returned.
-}}
-
 \examples{
 library(nlcor)
 plot(x1, y1)

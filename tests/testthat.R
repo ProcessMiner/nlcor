@@ -39,17 +39,14 @@ expect_equal(object = SampleCor(x, y, s = 0.3),
              tolerance = 1e-5)
 
 
-expect_equal(object = nlcor(x, y),
-             expected = list(cor.estimate = 0.8397742,
-                             segments = list(segment.cor = list(cor = c(-0.7090867,
-                                                                        0.9390392,
-                                                                        -0.7916622,
-                                                                        0.9193088),
-                                                                p.value = c(4.516445e-03,
-                                                                           6.491941e-07,
-                                                                           7.411246e-04,
-                                                                           9.503901e-03)),
-                                             segment.size = 0.3)
-                             ),
+expect_equal(object = nlcor(x, y, plt = F),
+             expected = list(cor.estimate = 0.748121,
+                             adjusted.p.value = 0.02134704),
              tolerance = 1e-5
              )
+
+expect_equal(object = nlcor(x, y, plt = F, refine = 0.0),
+             expected = list(cor.estimate = 0.8397742,
+                             adjusted.p.value = 0.01476212),
+             tolerance = 1e-5
+)

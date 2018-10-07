@@ -4,8 +4,9 @@ author: "Chitta Ranjan and Vahab Najari, ProcessMiner, Inc."
 package: "nlcor"
 date: "`r Sys.Date()`"
 output:
-  rmarkdown::html_vignette:
-    fig_caption: yes
+  pdf_document
+  # rmarkdown::html_vignette:
+  #   fig_caption: yes
 # output:
 #   md_document
 vignette: >
