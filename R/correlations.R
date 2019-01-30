@@ -131,7 +131,7 @@ NetCor <- function(cors, pvalues, p.threshold = 0.05) {
   }
 
   return(list(cor.estimate = mean(abs(cors)),
-              adjusted.p.value = sum(pvalues, na.rm = T),  # we sum the p values, not average it
+              adjusted.p.value = 1- prod((1 - pvalues), na.rm = T),  # Approximation of p-value assuming segment independence
               segment.cor = list(cor = cors,
                                  p.value = pvalues)))
 }
