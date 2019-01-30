@@ -1,7 +1,7 @@
 rm(list = ls())
 devtools::load_all()
 library(nlcor)
-load_data(pkg = ".")
+library(ggplot2)
 plot(x, y)
 
 nonlinear.cor <- nlcor(x1, y1, plt = T)
