@@ -1,0 +1,361 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={nlcor: Nonlinear Correlation},
+            pdfauthor={Chitta Ranjan and Vahab Najari, ProcessMiner, Inc.},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{nlcor: Nonlinear Correlation}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Chitta Ranjan and Vahab Najari, ProcessMiner, Inc.}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{2019-07-09}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{purpose}{%
+\subsection{Purpose}\label{purpose}}
+
+Estimate nonlinear correlations using \texttt{nlcor}. Yields a
+correlation estimate between 0 and 1, and the adjusted p value. The p
+value indicates if the estimated correlation is statistically
+significant.
+
+\hypertarget{description}{%
+\subsection{Description}\label{description}}
+
+Correlations are commonly used in various data mining applications.
+Typically linear correlations are estimated. However, the data may have
+a nonlinear correlation but little to no linear correlation. If, for
+example, we are performing data exploration using automated techniques
+on many variables, such nonlinearly correlated variables can easily be
+overlooked.
+
+Nonlinear correlations are quite common in real data. Due to this,
+nonlinear models, such as SVM, are employed for regression,
+classification, etc. However, there are not many approaches to estimate
+nonlinear correlations. If developed, it will find application in data
+exploration, variable selection, and other areas.
+
+In this package, we provide an implementation of a nonlinear correlation
+estimation method using an adaptive local linear correlation computation
+in \texttt{nlcor}. The function \texttt{nlcor} returns the nonlinear
+correlation estimate, the corresponding adjusted p value, and an
+optional plot visualizing the nonlinear relationships.
+
+The correlation estimate will be between 0 and 1. The higher the value
+the more is the nonlinear correlation. Unlike linear correlations, a
+negative value is not valid here. Due to multiple local correlation
+computations, the net p value of the correlation estimate is adjusted
+(to avoid false positives). The plot visualizes the local linear
+correlations.
+
+In the following, we will show its usage with a few examples. In the
+given examples, the linear correlations between \texttt{x} and
+\texttt{y} is small, however, there is a visible nonlinear correlation
+between them. This package contains the data for these examples and can
+be used for testing the package.
+
+\hypertarget{example-1.}{%
+\subsubsection{Example 1.}\label{example-1.}}
+
+A data with cyclic nonlinear correlation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(x1, y1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-1.1-1} \end{center}
+
+The linear correlation of the data is,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(x1, y1)}
+\CommentTok{#> [1] 0.008001837}
+\end{Highlighting}
+\end{Shaded}
+
+As expected, the correlation is close to zero. We estimate the nonlinear
+correlation using \texttt{nlcor}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\KeywordTok{nlcor}\NormalTok{(x1, y1, }\DataTypeTok{plt =}\NormalTok{ T)}
+\NormalTok{c}\OperatorTok{$}\NormalTok{cor.estimate}
+\CommentTok{#> [1] 0.8688784}
+\NormalTok{c}\OperatorTok{$}\NormalTok{adjusted.p.value}
+\CommentTok{#> [1] 0}
+\KeywordTok{print}\NormalTok{(c}\OperatorTok{$}\NormalTok{cor.plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-1.2-1} \end{center}
+
+The plot shows the piecewise linear correlations present in the data.
+
+\hypertarget{example-2.}{%
+\subsubsection{Example 2.}\label{example-2.}}
+
+A data with non-uniform piecewise linear correlations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(x2, y2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-2.1-1} \end{center}
+
+The linear correlation of the data is,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(x2, y2)}
+\CommentTok{#> [1] 0.828596}
+\end{Highlighting}
+\end{Shaded}
+
+The linear correlation is quite high in this data. However, there is
+significant and higher nonlinear correlation present in the data. This
+data emulates the scenario where the correlation changes its direction
+after a point. Sometimes that change point is in the middle causing the
+linear correlation to be close to zero. Here we show an example when the
+change point is off center to show that the implementation works in
+non-uniform cases.
+
+We estimate the nonlinear correlation using \texttt{nlcor}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\KeywordTok{nlcor}\NormalTok{(x2, y2, }\DataTypeTok{plt =}\NormalTok{ T)}
+\NormalTok{c}\OperatorTok{$}\NormalTok{cor.estimate}
+\CommentTok{#> [1] 0.897205}
+\NormalTok{c}\OperatorTok{$}\NormalTok{adjusted.p.value}
+\CommentTok{#> [1] 0}
+\KeywordTok{print}\NormalTok{(c}\OperatorTok{$}\NormalTok{cor.plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-2.2-1} \end{center}
+
+It is visible from the plot that \texttt{nlcor} could estimate the
+piecewise correlations in a non-uniform scenario. Also, the nonlinear
+correlation comes out to be higher than the linear correlation.
+
+\hypertarget{example-3.}{%
+\subsubsection{Example 3.}\label{example-3.}}
+
+A data with higher and multiple frequency variations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(x3, y3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-3.1-1} \end{center}
+
+The linear correlation of the data is,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{cor}\NormalTok{(x3, y3)}
+\CommentTok{#> [1] -0.1337304}
+\end{Highlighting}
+\end{Shaded}
+
+The linear correlation is expectedly small, albeit not close to zero due
+to some linearity.
+
+Here we show we can refine the granularity of the correlation
+computation.
+
+Under default settings, the output of \texttt{nlcor} will be,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\KeywordTok{nlcor}\NormalTok{(x3, y3, }\DataTypeTok{plt =}\NormalTok{ T)}
+\NormalTok{c}\OperatorTok{$}\NormalTok{cor.estimate}
+\CommentTok{#> [1] 0.7090148}
+\NormalTok{c}\OperatorTok{$}\NormalTok{adjusted.p.value}
+\CommentTok{#> [1] 0}
+\KeywordTok{print}\NormalTok{(c}\OperatorTok{$}\NormalTok{cor.plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-3.2-1} \end{center}
+
+As can be seen in the figure, \texttt{nlcor} overlooked some of the
+local relationships. We can refine the correlation estimation by
+changing the \texttt{refine} parameter. The default value of
+\texttt{refine} is set as 0.5. It can be set as any value between
+\texttt{0} and \texttt{1}. A higher value enforces higher refinement.
+However, higher refinement adversely affects the p value. Meaning, the
+resultant correlation estimate may be statistically insignificant
+(similar to overfitting). Therefore, it is recommended to avoid over
+refinement.
+
+In this data, we rerun the correlation estimation with
+\texttt{refine\ =\ 0.9}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c <-}\StringTok{ }\KeywordTok{nlcor}\NormalTok{(x3, y3, }\DataTypeTok{refine =} \FloatTok{0.9}\NormalTok{, }\DataTypeTok{plt =}\NormalTok{ T)}
+\NormalTok{c}\OperatorTok{$}\NormalTok{cor.estimate}
+\CommentTok{#> [1] 0.8534956}
+\NormalTok{c}\OperatorTok{$}\NormalTok{adjusted.p.value}
+\CommentTok{#> [1] 2.531456e-06}
+\KeywordTok{print}\NormalTok{(c}\OperatorTok{$}\NormalTok{cor.plot)}
+\CommentTok{#> Warning: Removed 148 rows containing missing values (geom_path).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{README_files/figure-latex/Figure-3.3-1} \end{center}
+
+As can be seen in the figure, \texttt{nlcor} could identify the granular
+piecewise correlations. In this data, the p value still remains
+extremely small---the correlation is \emph{statistically significant}.
+
+\hypertarget{summary}{%
+\subsection{Summary}\label{summary}}
+
+This package provides an implementation of an efficient heuristic to
+compute the nonlinear correlations between numeric vectors. The
+heuristic works by adaptively identifying multiple local regions of
+linear correlations to estimate the overall nonlinear correlation. Its
+usages are demonstrated here with few examples.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{support}{%
+\subsection{Support}\label{support}}
+
+Chitta Ranjan
+\href{mailto:cranjan@processminer.com}{\nolinkurl{cranjan@processminer.com}}
+
+Vahab Najari
+\href{mailto:vnajari@processminer.com}{\nolinkurl{vnajari@processminer.com}}
+
+Visit \textless{}www.processminer.com\textgreater{} for further
+information.
+
+
+\end{document}
