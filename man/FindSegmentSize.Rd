@@ -8,6 +8,9 @@ FindSegmentSize(l, refine)
 }
 \arguments{
 \item{l}{An integer.}
+
+\item{refine}{Optional. Default value 0.5. Increase the value to increase
+the granularity of local correlation computation.}
 }
 \value{
 A floating number \code{s} between 0 and 1.

@@ -84,6 +84,7 @@ nlcor <- function(x, y, refine = 0.5, plt = F) {
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
 #' @return \code{list(cor, pvalue)} containing the correlations and its pvalue for each segment.
 #' @keywords nonlinear correlation, sample
+#' @export
 #' @examples
 #' SampleCor(x, y, s = 0.2)
 #'
@@ -100,7 +101,7 @@ SampleCor <- function(x, y, s) {
               pvalue = NULL)
 
   for(seg in segments) {
-    segcor <- cor.test(df$x[seg], df$y[seg])
+    segcor <- stats::cor.test(df$x[seg], df$y[seg])
     out$cor <- c(out$cor, segcor$estimate[[1]])
     out$pvalue <- c(out$pvalue, segcor$p.value)
   }
@@ -116,6 +117,7 @@ SampleCor <- function(x, y, s) {
 #' @param p.threshold The overall threshold of p value, also known as the significance level.
 #' @return The net correlation estimate, \code{cor.estimate}, and a list containing
 #' the adjusted correlations and pvalues for each "linear" segment.
+#' @export
 #' @examples
 #' cors <- c(-0.70, 0.93, -0.79, 0.91)
 #' pvalues <- c(0.004, 0.0006, 0.0007, 0.009)
