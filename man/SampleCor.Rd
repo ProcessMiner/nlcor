@@ -25,5 +25,5 @@ SampleCor(x, y, s = 0.2)
 
 }
 \keyword{correlation,}
-\keyword{nonlinear}
+\keyword{nonlinear,}
 \keyword{sample}

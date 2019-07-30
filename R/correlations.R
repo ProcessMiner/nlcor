@@ -83,7 +83,7 @@ nlcor <- function(x, y, refine = 0.5, plt = F) {
 #' @param y A numeric vector. NAs are not allowed. Length should be same as x.
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
 #' @return \code{list(cor, pvalue)} containing the correlations and its pvalue for each segment.
-#' @keywords nonlinear correlation, sample
+#' @keywords nonlinear, correlation, sample
 #' @export
 #' @examples
 #' SampleCor(x, y, s = 0.2)
