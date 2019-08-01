@@ -6,7 +6,7 @@
 #' @param segment.cor A list Segment-wise correlation and associated p.value
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
 #' @return ggplot plot object
-#' @keywords nonlinear correlation, plot
+#' @keywords plot
 #' @export
 #' @examples
 #' library(ggplot2)

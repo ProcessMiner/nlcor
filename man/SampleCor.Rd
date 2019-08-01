@@ -24,6 +24,4 @@ at some spatial sampling
 SampleCor(x, y, s = 0.2)
 
 }
-\keyword{correlation,}
-\keyword{nonlinear,}
 \keyword{sample}

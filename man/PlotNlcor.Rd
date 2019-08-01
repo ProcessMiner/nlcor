@@ -28,6 +28,4 @@ segment.cor <- list(cor = c(-0.77, 0.52, 0.91, 0.11, 0.43),
 PlotNlcor(x, y, segment.cor = segment.cor, s = 0.2)
 
 }
-\keyword{correlation,}
-\keyword{nonlinear}
 \keyword{plot}
