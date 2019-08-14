@@ -3,4 +3,4 @@
 ^doc$
 ^Meta$
 ^main.R
-^cran-comments.Rmd
+^cran-comments\.md$
