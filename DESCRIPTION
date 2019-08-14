@@ -3,8 +3,8 @@ Type: Package
 Title: Compute Nonlinear Correlations
 Version: 1.0.0
 Authors@R: c(
-    person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
-    person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
+    person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut")),
+    person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut", "cre"))
     )
 Description: An implementation of an efficient heuristic to compute the nonlinear
     correlations between numeric vectors. The heuristic works by adaptive
