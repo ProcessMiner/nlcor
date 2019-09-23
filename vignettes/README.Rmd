@@ -10,7 +10,7 @@ output:
 # output:
   # md_document
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{"nlcor: Nonlinear Correlation"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
