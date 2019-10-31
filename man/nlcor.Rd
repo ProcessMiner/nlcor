@@ -4,7 +4,7 @@
 \alias{nlcor}
 \title{Compute Nonlinear Correlation}
 \usage{
-nlcor(x, y, refine = 0.5, plt = F)
+nlcor(x, y, refine = 0.975, plt = F)
 }
 \arguments{
 \item{x}{A numeric vector. NAs are not allowed. The length of the vector should be more than 10.}
