@@ -4,6 +4,7 @@
 #' @param l An integer.
 #' @param s A float number between 0 and 1.
 #' @return The list of segmented sequence \code{1:l}.
+#' @export
 #' @examples
 #' Segment(l = 100, s = 0.2)
 #'
@@ -40,12 +41,15 @@ Segment <- function(l, s) {
 #'
 #' Identify a segment size that yields at least 5 record.
 #' @param l An integer.
+#' @param refine Optional. Default value 0.5. Increase the value to increase
+#' the granularity of local correlation computation.
 #' @return A floating number \code{s} between 0 and 1.
+#' @export
 #' @examples
 #' FindSegmentSize(l = 100, refine = 0.9)
 #'
 FindSegmentSize <- function(l, refine) {
-  s <- 0.05 * (1 - refine)
+  s <- (1 - refine)
   seg.size <- floor(s * l)
 
   segmentAdjusted <- F

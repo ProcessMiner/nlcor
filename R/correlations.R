@@ -20,17 +20,18 @@
 #' @export
 #' @examples
 #' library(nlcor)
+#' library(ggplot2)
 #' plot(x1, y1)
 #' c <- nlcor(x1, y1)
 #' c
-#' c <- nlcor(x2, y2, plt = T)
+#' c <- nlcor(x2, y2, plt = TRUE)
 #' print(c$cor.plot)
-#' c <- nlcor(x3, y3, refine = 0.9, plt = T)
+#' c <- nlcor(x3, y3, refine = 0.9, plt = TRUE)
 #' c$cor.estimate
 #' c$adjusted.p.value
 #' print(c$cor.plot)
 #'
-nlcor <- function(x, y, refine = 0.5, plt = F) {
+nlcor <- function(x, y, refine = 0.975, plt = F) {
 
   if(refine >= 1.0) {
     stop("Value of refine cannot be >= 1.0.")
@@ -43,7 +44,7 @@ nlcor <- function(x, y, refine = 0.5, plt = F) {
 
   s.size <- FindSegmentSize(l = length(x), refine = refine) # * refine
 
-  for(s in seq(s.size, 1, s.size * (1 - refine))) {
+  for(s in seq(s.size, 1, (1 - refine))) {
     sampleCor <- SampleCor(x, y, s)
     netCor <- NetCor(cors = sampleCor$cor, pvalues = sampleCor$pvalue)
 
@@ -82,7 +83,8 @@ nlcor <- function(x, y, refine = 0.5, plt = F) {
 #' @param y A numeric vector. NAs are not allowed. Length should be same as x.
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
 #' @return \code{list(cor, pvalue)} containing the correlations and its pvalue for each segment.
-#' @keywords nonlinear correlation, sample
+#' @keywords sample
+#' @export
 #' @examples
 #' SampleCor(x, y, s = 0.2)
 #'
@@ -99,7 +101,7 @@ SampleCor <- function(x, y, s) {
               pvalue = NULL)
 
   for(seg in segments) {
-    segcor <- cor.test(df$x[seg], df$y[seg])
+    segcor <- stats::cor.test(df$x[seg], df$y[seg])
     out$cor <- c(out$cor, segcor$estimate[[1]])
     out$pvalue <- c(out$pvalue, segcor$p.value)
   }
@@ -115,6 +117,7 @@ SampleCor <- function(x, y, s) {
 #' @param p.threshold The overall threshold of p value, also known as the significance level.
 #' @return The net correlation estimate, \code{cor.estimate}, and a list containing
 #' the adjusted correlations and pvalues for each "linear" segment.
+#' @export
 #' @examples
 #' cors <- c(-0.70, 0.93, -0.79, 0.91)
 #' pvalues <- c(0.004, 0.0006, 0.0007, 0.009)

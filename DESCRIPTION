@@ -1,13 +1,13 @@
 Package: nlcor
 Type: Package
 Title: Compute Nonlinear Correlations
-Version: 0.1.1
+Version: 1.0.0
 Authors@R: c(
     person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
     person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
     )
 Description: An implementation of an efficient heuristic to compute the nonlinear
-    correlations between numeric vectors. The heuristic works by adaptively
+    correlations between numeric vectors. The heuristic works by adaptive
     identifying multiple local regions of linear correlations to estimate the
     overall nonlinear correlation. The nonlinear correlations estimate has
     various applications in data exploration and variable selection for
@@ -16,12 +16,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
-Suggests:
-    testthat,
     ggplot2,
+    stats
+Suggests:
+    testthat (>= 2.1.0),
     reshape2,
     knitr,
     rmarkdown
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Depends: R (>= 3.0.1)
 VignetteBuilder: knitr

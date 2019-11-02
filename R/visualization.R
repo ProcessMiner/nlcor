@@ -1,3 +1,19 @@
+#' Plotting the nonlinear correlation.
+#'
+#' Plot nonlinear correlation.
+#' @param x A numeric vector. NAs are not allowed.
+#' @param y A numeric vector. NAs are not allowed. Length should be same as x.
+#' @param segment.cor A list Segment-wise correlation and associated p.value
+#' @param s The sample size as percent of the vector length. A float number between 0 and 1.
+#' @return ggplot plot object
+#' @keywords plot
+#' @export
+#' @examples
+#' library(ggplot2)
+#' segment.cor <- list(cor = c(-0.77, 0.52, 0.91, 0.11, 0.43),
+#'  p.value = c(0.00000012, 0.0002332, 0.0041, 0.01123, 0.52))
+#' PlotNlcor(x, y, segment.cor = segment.cor, s = 0.2)
+#'
 PlotNlcor <- function(x, y, segment.cor, s) {
   df <- data.frame(x, y)
   df <- df[order(x), ] # We sort x to sample it spatially.
@@ -14,7 +30,7 @@ PlotNlcor <- function(x, y, segment.cor, s) {
       seg <- c(seg, segments[[i]])
     } else { # Direction changes.
       if(segment.cor$cor[i - 1] != 0) {
-        fit <- lm(y ~ x, data = df[seg, c("x", "y")])
+        fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
 
         df.fit <- rbind(df.fit,
                         data.frame(x = df[seg, "x"],
@@ -28,7 +44,7 @@ PlotNlcor <- function(x, y, segment.cor, s) {
   last <- length(segments)
   if(sign(segment.cor$cor[last - 1]) == sign(segment.cor$cor[last])) {
     if(segment.cor$cor[last - 1] != 0) {
-      fit <- lm(y ~ x, data = df[seg, c("x", "y")])  # The last seg above is valid here
+      fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])  # The last seg above is valid here
 
       df.fit <- rbind(df.fit,
                       data.frame(x = df[seg, "x"],
@@ -37,25 +53,25 @@ PlotNlcor <- function(x, y, segment.cor, s) {
     }
   } else {
     if(segment.cor$cor[last] != 0) {
-      fit <- lm(y ~ x, data = df[segments[[last]], c("x", "y")])  # The last seg above is valid here
+      fit <- stats::lm(y ~ x, data = df[segments[[last]], c("x", "y")])  # The last seg above is valid here
       df.fit <- rbind(df.fit,
                       data.frame(x = df[seg, "x"],
                                  fit = fit$fitted))
     }
   }
 
-  p <- ggplot() +
-    geom_point(data = df, aes(x = x, y = y)) +
-    geom_line(data = df.fit, aes(x = x, y = fit, colour = "red")) +
-    xlab("x") +
-    ylab("y") +
-    theme_bw() +
-    theme(panel.border = element_blank(),
-          axis.line = element_line(colour = "#000000"),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          axis.text = element_text(size = 12),
-          axis.title = element_text(size = 12),
+  p <- ggplot2::ggplot() +
+    ggplot2::geom_point(data = df, ggplot2::aes(x = x, y = y)) +
+    ggplot2::geom_line(data = df.fit, ggplot2::aes(x = x, y = fit, colour = "red")) +
+    ggplot2::xlab("x") +
+    ggplot2::ylab("y") +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+          axis.line = ggplot2::element_line(colour = "#000000"),
+          panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank(),
+          axis.text = ggplot2::element_text(size = 12),
+          axis.title = ggplot2::element_text(size = 12),
           legend.position = "none"
           )
   return(p)

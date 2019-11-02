@@ -4,7 +4,7 @@
 \alias{nlcor}
 \title{Compute Nonlinear Correlation}
 \usage{
-nlcor(x, y, refine = 0.5, plt = F)
+nlcor(x, y, refine = 0.975, plt = F)
 }
 \arguments{
 \item{x}{A numeric vector. NAs are not allowed. The length of the vector should be more than 10.}
@@ -32,12 +32,13 @@ correlations are computed at the samples and combined.
 }
 \examples{
 library(nlcor)
+library(ggplot2)
 plot(x1, y1)
 c <- nlcor(x1, y1)
 c
-c <- nlcor(x2, y2, plt = T)
+c <- nlcor(x2, y2, plt = TRUE)
 print(c$cor.plot)
-c <- nlcor(x3, y3, refine = 0.9, plt = T)
+c <- nlcor(x3, y3, refine = 0.9, plt = TRUE)
 c$cor.estimate
 c$adjusted.p.value
 print(c$cor.plot)
