@@ -1,5 +1,7 @@
-rm(list = ls())
-devtools::load_all()
+install.packages("devtools")
+library(devtools)
+install_github("ProcessMiner/nlcor")
+
 library(nlcor)
 library(ggplot2)
 plot(x, y)
@@ -12,6 +14,7 @@ print(nonlinear.cor)
 
 nonlinear.cor <- nlcor(x3, y3, plt = T)
 print(nonlinear.cor)
+
 nonlinear.cor <- nlcor(x3, y3, refine = 0.999, plt = T)
 print(nonlinear.cor)
 
