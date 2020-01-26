@@ -17,4 +17,3 @@ print(nonlinear.cor)
 
 nonlinear.cor <- nlcor(x3, y3, refine = 0.999, plt = T)
 print(nonlinear.cor)
-
