@@ -77,7 +77,7 @@ PlotNlcor <- function(x, y, segment.cor, s) {
     df.fit[seg[length(seg)], "fit"] <- NA
 
     # Second segment. The seg will be set as segment[[2]].
-    seg <- segments[[1]]
+    seg <- segments[[2]]
 
     fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
 
