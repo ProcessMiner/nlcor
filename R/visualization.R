@@ -25,7 +25,7 @@ PlotNlcor <- function(x, y, segment.cor, s) {
   segments <- Segment(l = l, s = s)
   seg <- segments[[1]]
 
-  if(length(segments) > 1) {
+  if(length(segments) > 2) {
     for(i in 2:length(segments)) {
       if(sign(segment.cor$cor[i - 1]) == sign(segment.cor$cor[i])) { # The correlation direction is same
         seg <- c(seg, segments[[i]])
@@ -61,6 +61,24 @@ PlotNlcor <- function(x, y, segment.cor, s) {
       }
     }
   } else if(length(segments) == 1) {
+    fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
+
+    df.fit <- rbind(df.fit,
+                    data.frame(x = df[seg, "x"],
+                               fit = fit$fitted))  # Adding an NA row for disjoint line plot
+    df.fit[seg[length(seg)], "fit"] <- NA
+  } else if(length(segments) == 2) {
+    # First segment. The seg is already set as segment[[1]].
+    fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
+
+    df.fit <- rbind(df.fit,
+                    data.frame(x = df[seg, "x"],
+                               fit = fit$fitted))  # Adding an NA row for disjoint line plot
+    df.fit[seg[length(seg)], "fit"] <- NA
+
+    # Second segment. The seg will be set as segment[[2]].
+    seg <- segments[[2]]
+
     fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
 
     df.fit <- rbind(df.fit,
