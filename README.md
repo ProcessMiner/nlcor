@@ -143,14 +143,17 @@ Meaning, the resultant correlation estimate may be statistically
 insignificant (similar to overfitting). Therefore, it is recommended to
 avoid over refinement.
 
-In this data, we rerun the correlation estimation with `refine = 0.9`.
+In this data, we rerun the correlation estimation with `refine = 0.999`.
 
-    c <- nlcor(x3, y3, refine = 0.9, plt = T)
+    c <- nlcor(x3, y3, refine = 0.999, plt = T)
+    #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
+    #> high or data is small. Adjusting computation.
     c$cor.estimate
-    #> [1] 0.7090148
+    #> [1] 0.8042864
     c$adjusted.p.value
-    #> [1] 0
+    #> [1] 4.59308e-05
     print(c$cor.plot)
+    #> Warning: Removed 308 rows containing missing values (geom_path).
 
 <img src="README_files/figure-markdown_strict/Figure-3.3-1.png" style="display: block; margin: auto;" />
 

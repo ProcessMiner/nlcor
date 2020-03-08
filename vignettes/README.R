@@ -44,7 +44,7 @@ c$adjusted.p.value
 print(c$cor.plot)
 
 ## ---- Figure-3.3, fig.show='hold', fig.align = 'center', fig.height = 4, fig.width = 6----
-c <- nlcor(x3, y3, refine = 0.9, plt = T)
+c <- nlcor(x3, y3, refine = 0.999, plt = T)
 c$cor.estimate
 c$adjusted.p.value
 print(c$cor.plot)
