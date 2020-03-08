@@ -4,7 +4,7 @@
 \alias{PlotNlcor}
 \title{Plotting the nonlinear correlation.}
 \usage{
-PlotNlcor(x, y, segment.cor, s)
+PlotNlcor(x, y, segment.cor, s, line_thickness = 1, line_opacity = 1)
 }
 \arguments{
 \item{x}{A numeric vector. NAs are not allowed.}

@@ -1,7 +1,7 @@
 Package: nlcor
 Type: Package
 Title: Compute Nonlinear Correlations
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: c(
     person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
     person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
@@ -23,6 +23,6 @@ Suggests:
     reshape2,
     knitr,
     rmarkdown
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Depends: R (>= 3.0.1)
 VignetteBuilder: knitr
