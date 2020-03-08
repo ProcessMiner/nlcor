@@ -1,13 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  8 MAR 2020 17:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  8 MAR 2020 18:05
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**README.tex
-(./README.tex
-LaTeX2e <2016/03/31>
-Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
+**\nonstopmode \input ./README.tex
+(./README.tex (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
@@ -1010,7 +1006,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-1.2-1' not found on input
  line 210.
 
 
-./README.tex:210: LaTeX Error: Unknown graphics extension: .2-1.
+! LaTeX Error: Unknown graphics extension: .2-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1026,7 +1022,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-2.1-1' not found on input
  line 225.
 
 
-./README.tex:225: LaTeX Error: Unknown graphics extension: .1-1.
+! LaTeX Error: Unknown graphics extension: .1-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1043,7 +1039,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-2.2-1' not found on input
  line 257.
 
 
-./README.tex:257: LaTeX Error: Unknown graphics extension: .2-1.
+! LaTeX Error: Unknown graphics extension: .2-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1059,7 +1055,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-3.1-1' not found on input
  line 274.
 
 
-./README.tex:274: LaTeX Error: Unknown graphics extension: .1-1.
+! LaTeX Error: Unknown graphics extension: .1-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1075,7 +1071,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-3.2-1' not found on input
  line 304.
 
 
-./README.tex:304: LaTeX Error: Unknown graphics extension: .2-1.
+! LaTeX Error: Unknown graphics extension: .2-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1092,7 +1088,7 @@ LaTeX Warning: File `README_files/figure-latex/Figure-3.3-1' not found on input
  line 331.
 
 
-./README.tex:331: LaTeX Error: Unknown graphics extension: .3-1.
+! LaTeX Error: Unknown graphics extension: .3-1.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -1161,12 +1157,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 361.
  ) 
 Here is how much of TeX's memory you used:
  12810 strings out of 493014
- 186099 string characters out of 6133351
+ 186101 string characters out of 6133351
  290884 words of memory out of 5000000
  16122 multiletter control sequences out of 15000+600000
  42832 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,5n,38p,231b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,5n,38p,253b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}</usr/local/
 texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/20
 16/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-d
