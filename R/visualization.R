@@ -5,6 +5,8 @@
 #' @param y A numeric vector. NAs are not allowed. Length should be same as x.
 #' @param segment.cor A list Segment-wise correlation and associated p.value
 #' @param s The sample size as percent of the vector length. A float number between 0 and 1.
+#' @param line_thickness Optional. Default 1. Thickness of the correlation lines. It is a float argument > 0.
+#' @param line_opacity Optional. Default 1, completely opaque. The opacity of the correlation lines. A float between 0-1. 0 is transparent.
 #' @return ggplot plot object
 #' @keywords plot
 #' @export
@@ -14,7 +16,7 @@
 #'  p.value = c(0.00000012, 0.0002332, 0.0041, 0.01123, 0.52))
 #' PlotNlcor(x, y, segment.cor = segment.cor, s = 0.2)
 #'
-PlotNlcor <- function(x, y, segment.cor, s) {
+PlotNlcor <- function(x, y, segment.cor, s, line_thickness = 1, line_opacity = 1) {
   df <- data.frame(x, y)
   df <- df[order(x), ] # We sort x to sample it spatially.
 
@@ -90,7 +92,11 @@ PlotNlcor <- function(x, y, segment.cor, s) {
 
   p <- ggplot2::ggplot() +
     ggplot2::geom_point(data = df, ggplot2::aes(x = x, y = y)) +
-    ggplot2::geom_line(data = df.fit, ggplot2::aes(x = x, y = fit, colour = "red")) +
+    ggplot2::geom_line(data = df.fit, ggplot2::aes(x = x,
+                                                   y = fit,
+                                                   colour = "red"),
+                       size = line_thickness,
+                       alpha = line_opacity) +
     ggplot2::xlab("x") +
     ggplot2::ylab("y") +
     ggplot2::theme_bw() +

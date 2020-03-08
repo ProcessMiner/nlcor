@@ -8,6 +8,8 @@
 #' the granularity of local correlation computation.
 #' @param plt Optional. Default value FALSE. Set TRUE to return ggplot2 object
 #' for the data correlation visualization.
+#' @param line_thickness Optional. Default 1. Thickness of the correlation lines. It is a float argument > 0.
+#' @param line_opacity Optional. Default 1, completely opaque. The opacity of the correlation lines. A float between 0-1. 0 is transparent.
 #' @return The output is a list containing the nonlinear correlation \code{cor.estimate}, \code{adjusted.p.value}, and \code{cor.plot}. \code{cor.estimate}
 #' is between 0 and 1 (a negative nonlinear correlation is undefined). The
 #' \code{adjusted.p.value} shows the statistical significance of the
@@ -31,7 +33,7 @@
 #' c$adjusted.p.value
 #' print(c$cor.plot)
 #'
-nlcor <- function(x, y, refine = 0.975, plt = F) {
+nlcor <- function(x, y, refine = 0.975, plt = F, line_thickness = 1, line_opacity = 1) {
 
   if(refine >= 1.0) {
     stop("Value of refine cannot be >= 1.0.")
@@ -60,7 +62,9 @@ nlcor <- function(x, y, refine = 0.975, plt = F) {
     cor.plot <- PlotNlcor(x = x,
                           y = y,
                           segment.cor = segment.cor,
-                          s = best.s)
+                          s = best.s,
+                          line_thickness = line_thickness,
+                          line_opacity = line_opacity)
     return(list(cor.estimate = maxCor,
                 adjusted.p.value = adjusted.p.value,
                 cor.plot = cor.plot

@@ -3,12 +3,12 @@ title: "nlcor: Nonlinear Correlation"
 author: "Chitta Ranjan and Vahab Najari, ProcessMiner, Inc."
 package: "nlcor"
 date: "`r Sys.Date()`"
-output:
-  # pdf_document
-  rmarkdown::html_vignette:
-    fig_caption: yes
 # output:
-  # md_document
+#   # pdf_document
+#   rmarkdown::html_vignette:
+#     fig_caption: yes
+output:
+  md_document
 vignette: >
   %\VignetteIndexEntry{"nlcor: Nonlinear Correlation"}
   %\VignetteEngine{knitr::rmarkdown}
@@ -61,7 +61,7 @@ the linear correlations between `x` and `y` is small, however, there is a
 visible nonlinear correlation between them. This package contains the data
 for these examples and can be used for testing the package.
 
-### Example 1.
+### Example 1. A nonlinear correlated data with close to zero linear correlation.
 
 A data with cyclic nonlinear correlation.
 
@@ -87,7 +87,7 @@ print(c$cor.plot)
 
 The plot shows the piecewise linear correlations present in the data.
 
-### Example 2.
+### Example 2. Non-uniform correlation structure.
 
 A data with non-uniform piecewise linear correlations.
 
@@ -121,7 +121,7 @@ It is visible from the plot that `nlcor` could estimate the piecewise
 correlations in a non-uniform scenario. Also, the nonlinear correlation comes
 out to be higher than the linear correlation.
 
-### Example 3.
+### Example 3. Highly noncorrelated data. Typical in multi-seasonal processes.
 A data with higher and multiple frequency variations.
 
 ```{r, Figure-3.1, fig.show='hold', fig.align = 'center', fig.height = 4, fig.width = 6}
@@ -167,6 +167,18 @@ print(c$cor.plot)
 As can be seen in the figure, `nlcor` could identify the granular piecewise
 correlations. In this data, the p value still remains extremely small—the
 correlation is _statistically significant_.
+
+### Example 4. Line visualization adjustment.
+
+Sometimes we want to change the line thickness and its opacity (1-transparency).
+
+They can be adjusted with `line_thickness` and `line_opacity` arguments.
+
+```{r, Figure-3.4, fig.show='hold', fig.align = 'center', fig.height = 4, fig.width = 6}
+c <- nlcor(x1, y1, plt = T, line_thickness = 2.5, line_opacity = 0.8)
+print(c$cor.plot)
+```
+
 
 ## Summary
 This package provides
