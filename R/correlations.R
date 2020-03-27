@@ -46,7 +46,7 @@ nlcor <- function(x, y, refine = 0.975, plt = F, line_thickness = 1, line_opacit
 
   s.size <- FindSegmentSize(l = length(x), refine = refine) # * refine
 
-  for(s in seq(s.size, 1, (1 - refine))) {
+  for(s in seq(s.size, 1, s.size * (1 - refine))) {
     sampleCor <- SampleCor(x, y, s)
     netCor <- NetCor(cors = sampleCor$cor, pvalues = sampleCor$pvalue)
 

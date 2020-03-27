@@ -49,7 +49,7 @@ Segment <- function(l, s) {
 #' FindSegmentSize(l = 100, refine = 0.9)
 #'
 FindSegmentSize <- function(l, refine) {
-  s <- (1 - refine)
+  s <- 0.05 * (1 - refine)
   seg.size <- floor(s * l)
 
   segmentAdjusted <- F
