@@ -46,7 +46,7 @@ A data with cyclic nonlinear correlation.
 
     plot(x1, y1)
 
-<img src="README_files/figure-markdown_strict/Figure-1.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-1.1-1.png">
 
 The linear correlation of the data is,
 
@@ -57,13 +57,15 @@ As expected, the correlation is close to zero. We estimate the nonlinear
 correlation using `nlcor`.
 
     c <- nlcor(x1, y1, plt = T)
+    #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
+    #> high or data is small. Adjusting computation.
     c$cor.estimate
-    #> [1] 0.8688784
+    #> [1] 0.8969659
     c$adjusted.p.value
     #> [1] 0
     print(c$cor.plot)
 
-<img src="README_files/figure-markdown_strict/Figure-1.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-1.2-1.png">
 
 The plot shows the piecewise linear correlations present in the data.
 
@@ -73,7 +75,7 @@ A data with non-uniform piecewise linear correlations.
 
     plot(x2, y2)
 
-<img src="README_files/figure-markdown_strict/Figure-2.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-2.1-1.png">
 
 The linear correlation of the data is,
 
@@ -91,14 +93,16 @@ non-uniform cases.
 We estimate the nonlinear correlation using `nlcor`.
 
     c <- nlcor(x2, y2, plt = T)
+    #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
+    #> high or data is small. Adjusting computation.
     c$cor.estimate
-    #> [1] 0.8921375
+    #> [1] 0.897205
     c$adjusted.p.value
     #> [1] 0
     print(c$cor.plot)
     #> Warning: Removed 1 rows containing missing values (geom_path).
 
-<img src="README_files/figure-markdown_strict/Figure-2.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-2.2-1.png">
 
 It is visible from the plot that `nlcor` could estimate the piecewise
 correlations in a non-uniform scenario. Also, the nonlinear correlation
@@ -110,7 +114,7 @@ A data with higher and multiple frequency variations.
 
     plot(x3, y3)
 
-<img src="README_files/figure-markdown_strict/Figure-3.1-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.1-1.png">
 
 The linear correlation of the data is,
 
@@ -127,12 +131,13 @@ Under default settings, the output of `nlcor` will be,
 
     c <- nlcor(x3, y3, plt = T)
     c$cor.estimate
-    #> [1] 0.7090148
+    #> [1] 0.8534956
     c$adjusted.p.value
-    #> [1] 0
+    #> [1] 2.531456e-06
     print(c$cor.plot)
+    #> Warning: Removed 148 rows containing missing values (geom_path).
 
-<img src="README_files/figure-markdown_strict/Figure-3.2-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.2-1.png">
 
 As can be seen in the figure, `nlcor` overlooked some of the local
 relationships. We can refine the correlation estimation by changing the
@@ -143,19 +148,17 @@ Meaning, the resultant correlation estimate may be statistically
 insignificant (similar to overfitting). Therefore, it is recommended to
 avoid over refinement.
 
-In this data, we rerun the correlation estimation with `refine = 0.999`.
+In this data, we rerun the correlation estimation with `refine = 0.9`.
 
-    c <- nlcor(x3, y3, refine = 0.999, plt = T)
-    #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
-    #> high or data is small. Adjusting computation.
+    c <- nlcor(x3, y3, refine = 0.9, plt = T)
     c$cor.estimate
-    #> [1] 0.8042864
+    #> [1] 0.8534956
     c$adjusted.p.value
-    #> [1] 4.59308e-05
+    #> [1] 2.531456e-06
     print(c$cor.plot)
-    #> Warning: Removed 308 rows containing missing values (geom_path).
+    #> Warning: Removed 148 rows containing missing values (geom_path).
 
-<img src="README_files/figure-markdown_strict/Figure-3.3-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.3-1.png">
 
 As can be seen in the figure, `nlcor` could identify the granular
 piecewise correlations. In this data, the p value still remains
@@ -169,9 +172,11 @@ Sometimes we want to change the line thickness and its opacity
 They can be adjusted with `line_thickness` and `line_opacity` arguments.
 
     c <- nlcor(x1, y1, plt = T, line_thickness = 2.5, line_opacity = 0.8)
+    #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
+    #> high or data is small. Adjusting computation.
     print(c$cor.plot)
 
-<img src="README_files/figure-markdown_strict/Figure-3.4-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-markdown_strict/Figure-3.4-1.png">
 
 Summary
 -------

@@ -14,6 +14,10 @@ PlotNlcor(x, y, segment.cor, s, line_thickness = 1, line_opacity = 1)
 \item{segment.cor}{A list Segment-wise correlation and associated p.value}
 
 \item{s}{The sample size as percent of the vector length. A float number between 0 and 1.}
+
+\item{line_thickness}{Optional. Default 1. Thickness of the correlation lines. It is a float argument > 0.}
+
+\item{line_opacity}{Optional. Default 1, completely opaque. The opacity of the correlation lines. A float between 0-1. 0 is transparent.}
 }
 \value{
 ggplot plot object

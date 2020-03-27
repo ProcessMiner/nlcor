@@ -1,7 +1,7 @@
 Package: nlcor
 Type: Package
 Title: Compute Nonlinear Correlations
-Version: 1.2.0
+Version: 1.3.0
 Authors@R: c(
     person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
     person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))

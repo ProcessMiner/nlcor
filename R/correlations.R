@@ -33,7 +33,7 @@
 #' c$adjusted.p.value
 #' print(c$cor.plot)
 #'
-nlcor <- function(x, y, refine = 0.975, plt = F, line_thickness = 1, line_opacity = 1) {
+nlcor <- function(x, y, refine = 0.5, plt = F, line_thickness = 1, line_opacity = 1) {
 
   if(refine >= 1.0) {
     stop("Value of refine cannot be >= 1.0.")
