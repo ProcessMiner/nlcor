@@ -22,7 +22,7 @@ Chitta Ranjan and Vahab Najari. “Package ’nlcor’: Compute Nonlinear Correl
   doi={10.13140/RG.2.2.10123.72488}
 }
 
-Chitta Ranjan and Vahab Najari. “nlcor: Nonlinear Corre-lation”. In:Research Gate(2019).doi:10.13140/RG.2.2.10123.72488.
+Chitta Ranjan and Vahab Najari. “nlcor: Nonlinear Correlation”. In:Research Gate(2019).doi:10.13140/RG.2.2.10123.72488.
 
 
 Purpose
