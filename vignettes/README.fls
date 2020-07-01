@@ -119,8 +119,6 @@ INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/parskip/parskip.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/parskip/parskip.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/titling/titling.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/titling/titling.sty
-INPUT README.aux
-INPUT README.aux
 OUTPUT README.aux
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1cmr.fd
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/ts1cmr.fd
@@ -133,14 +131,8 @@ INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 INPUT /usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-INPUT README.out
-INPUT README.out
-INPUT README.out
-INPUT README.out
-OUTPUT README.pdf
-INPUT ./README.out
-INPUT ./README.out
 OUTPUT README.out
+OUTPUT README.pdf
 INPUT /usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty

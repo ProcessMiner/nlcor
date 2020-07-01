@@ -25,6 +25,16 @@ library(ggplot2)
 library(reshape2)
 ```
 
+## Citation
+
+@article{ranjan2020nlcor,
+  title={Package 'nlcor': Compute Nonlinear Correlations},
+  author={Ranjan, Chitta and Najari, Vahab},
+  journal={Research Gate},
+  year={2020},
+  doi={doi:10.13140/RG.2.2.33716.68480}
+}
+
 ## Purpose 
 Estimate nonlinear correlations using `nlcor`. Yields a correlation 
 estimate between 0 and 1, and the adjusted p value. The p value indicates if

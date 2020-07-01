@@ -1,11 +1,23 @@
 install.packages("devtools")
 library(devtools)
-install_github("ProcessMiner/nlcor")
+# install_github("ProcessMiner/nlcor")
 devtools::load_all()
 
 library(nlcor)
 library(ggplot2)
 plot(x, y)
+
+# x <- seq(0,3*pi,length.out=100)
+# y <- sin(x) + rnorm(n = 100, sd = 0.2)
+# plot(x, y)
+#
+# simplecyclic <- data.frame(x = x, y = y)
+#
+# saveRDS(simplecyclic, 'data/simplecyclic.rda')
+
+cor(x, y)
+nonlinear.cor <- nlcor(x, y, plt = T)
+nonlinear.cor
 
 nonlinear.cor <- nlcor(x1, y1, plt = T)
 print(nonlinear.cor$cor.plot)
