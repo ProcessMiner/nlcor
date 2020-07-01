@@ -1,3 +1,30 @@
+## Citation
+
+* **Package 'nlcor': Compute Nonlinear Correlations**
+
+@article{ranjan2020packagenlcor,
+  title={Package 'nlcor': Compute Nonlinear Correlations},
+  author={Ranjan, Chitta and Najari, Vahab},
+  journal={Research Gate},
+  year={2020},
+  doi={10.13140/RG.2.2.33716.68480}
+}
+
+Chitta Ranjan and Vahab Najari. “Package ’nlcor’: Compute Nonlinear Correlations”. In:Research Gate(2020).doi:10.13140/RG.2.2.33716.68480.
+
+* **nlcor: Nonlinear Correlation**
+
+@article{ranjan2019nlcor,
+  title={nlcor: Nonlinear Correlation},
+  author={Ranjan, Chitta and Najari, Vahab},
+  journal={Research Gate},
+  year={2019},
+  doi={10.13140/RG.2.2.10123.72488}
+}
+
+Chitta Ranjan and Vahab Najari. “nlcor: Nonlinear Corre-lation”. In:Research Gate(2019).doi:10.13140/RG.2.2.10123.72488.
+
+
 Purpose
 -------
 
