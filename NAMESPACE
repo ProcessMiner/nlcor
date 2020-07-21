@@ -2,6 +2,7 @@
 
 export(FindSegmentSize)
 export(NetCor)
+export(PlotData)
 export(PlotNlcor)
 export(SampleCor)
 export(Segment)
