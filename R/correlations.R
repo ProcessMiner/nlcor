@@ -47,7 +47,7 @@ nlcor <- function(x, y, refine = 0.5, plt = F, line_thickness = 1, line_opacity 
   s.size <- FindSegmentSize(l = length(x), refine = refine) # * refine
 
   for(s in seq(s.size, 1, s.size * (1 - refine))) {
-    sampleCor <- SampleCor(x, y, s)
+    sampleCor <- suppressWarnings(SampleCor(x, y, s))
     netCor <- NetCor(cors = sampleCor$cor, pvalues = sampleCor$pvalue)
 
     if(netCor$cor.estimate > maxCor) {
@@ -59,17 +59,23 @@ nlcor <- function(x, y, refine = 0.5, plt = F, line_thickness = 1, line_opacity 
   }
 
   if(plt) {
-    cor.plot <- PlotNlcor(x = x,
-                          y = y,
-                          segment.cor = segment.cor,
-                          s = best.s,
-                          line_thickness = line_thickness,
-                          line_opacity = line_opacity)
+    
+    if(maxCor == 0) {
+      cor.plot <- PlotData(x = x,
+                           y = y)
+    } else {
+      cor.plot <- PlotNlcor(x = x,
+                            y = y,
+                            segment.cor = segment.cor,
+                            s = best.s,
+                            line_thickness = line_thickness,
+                            line_opacity = line_opacity)
+    }
     return(list(cor.estimate = maxCor,
                 adjusted.p.value = adjusted.p.value,
                 cor.plot = cor.plot
-               )
-            )
+                )
+          )
   } else {
     return(list(cor.estimate = maxCor,
                 adjusted.p.value = adjusted.p.value

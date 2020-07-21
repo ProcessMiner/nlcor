@@ -110,3 +110,36 @@ PlotNlcor <- function(x, y, segment.cor, s, line_thickness = 1, line_opacity = 1
           )
   return(p)
 }
+
+
+#' Plotting the the scatter plot of x,y
+#'
+#' Scatter plot of x and y
+#' @param x A numeric vector. NAs are not allowed.
+#' @param y A numeric vector. NAs are not allowed. Length should be same as x.
+#' @return ggplot plot object
+#' @keywords plot
+#' @export
+#' @examples
+#' library(ggplot2)
+#' PlotData(x, y)
+#'
+PlotData <- function(x, y) {
+  
+  df <- data.frame(x, y)
+  df <- df[order(x), ] # We sort x to sample it spatially.
+  p <- ggplot2::ggplot() + 
+    ggplot2::geom_point(data = df, aes(x=x, y=y)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                   axis.line = ggplot2::element_line(colour = "#000000"),
+                   panel.grid.major = ggplot2::element_blank(),
+                   panel.grid.minor = ggplot2::element_blank(),
+                   axis.text = ggplot2::element_text(size = 12),
+                   axis.title = ggplot2::element_text(size = 12),
+                   legend.position = "none"
+    )
+  
+  warning("Non-linear correlation was not detected.")
+  return(p)
+}
