@@ -140,6 +140,6 @@ PlotData <- function(x, y) {
                    legend.position = "none"
     )
   
-  warning("There is no non-linear correlation in this data.")
+  warning("Non-linear correlation was not detected.")
   return(p)
 }
