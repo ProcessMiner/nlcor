@@ -58,7 +58,7 @@ PlotNlcor <- function(x, y, segment.cor, s, line_thickness = 1, line_opacity = 1
       if(segment.cor$cor[last] != 0) {
         fit <- stats::lm(y ~ x, data = df[segments[[last]], c("x", "y")])  # The last seg above is valid here
         df.fit <- rbind(df.fit,
-                        data.frame(x = df[seg, "x"],
+                        data.frame(x = df[segments[[last]], "x"],
                                    fit = fit$fitted))
       }
     }
