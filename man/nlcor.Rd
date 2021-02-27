@@ -4,15 +4,26 @@
 \alias{nlcor}
 \title{Compute Nonlinear Correlation}
 \usage{
-nlcor(x, y, refine = 0.5, plt = F, line_thickness = 1, line_opacity = 1)
+nlcor(
+  x,
+  y,
+  refine = NA,
+  plt = T,
+  line_thickness = 1,
+  line_opacity = 1,
+  chart_title = NA
+)
 }
 \arguments{
 \item{x}{A numeric vector. NAs are not allowed. The length of the vector should be more than 10.}
 
-\item{y}{A numeric vector. NAs are not allowed. Length should be same as x.}
+\item{y}{A numeric vector. NAs are not allowed. Length should be same as `x`. The order of
+`x` and `y` are relevant. `nlcor(x, y)`` is not equal to `nlcor(y, x)`. Therefore, `x`
+should be a causal and `y` should be a dependent variable.}
 
-\item{refine}{Optional. Default value 0.5. Increase the value to increase
-the granularity of local correlation computation.}
+\item{refine}{Optional. If manually set, a small value, e.g., 0.01, increases
+the granularity of local correlation computation. The runtime is faster if `refine` is manually set.
+Otherwise, the algorithm automatically finds the best refinement.}
 
 \item{plt}{Optional. Default value FALSE. Set TRUE to return ggplot2 object
 for the data correlation visualization.}
@@ -31,21 +42,14 @@ significant). If \code{plt = T}, \code{ggplot2} object is return for
 plotting the identified local linear correlations in the data.
 }
 \description{
-Compute nonlinear correlation using spatial sampling. Local linear
-correlations are computed at the samples and combined.
+Compute nonlinear correlation using adaptive spatial sampling.
 }
 \examples{
 library(nlcor)
 library(ggplot2)
-plot(x1, y1)
-c <- nlcor(x1, y1)
-c
-c <- nlcor(x2, y2, plt = TRUE)
-print(c$cor.plot)
-c <- nlcor(x3, y3, refine = 0.9, plt = TRUE)
-c$cor.estimate
-c$adjusted.p.value
-print(c$cor.plot)
+ncor <- nlcor(x1, y1)
+ncor <- nlcor(x2, y2, plt = TRUE)
+ncor <- nlcor(x3, y3, refine = 0.01, plt = TRUE)
 
 }
 \seealso{

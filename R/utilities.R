@@ -1,13 +1,10 @@
-#' Segmentation.
-#'
-#' Segment \code{1:l} in to almost equal set of indices.
-#' @param l An integer.
-#' @param s A float number between 0 and 1.
-#' @return The list of segmented sequence \code{1:l}.
-#' @export
-#' @examples
-#' Segment(l = 100, s = 0.2)
-#'
+UpdateSegmentsCor <- function(x.seg, y.seg, segmentsCor) {
+  segcor <- stats::cor.test(x.seg, y.seg)
+  segmentsCor$cor <- c(segmentsCor$cor, segcor$estimate[[1]])
+  segmentsCor$pvalue <- c(segmentsCor$pvalue, segcor$p.value)
+  return(segmentsCor)
+}
+
 Segment <- function(l, s) {
 
   windowLen <- floor(s * l)
@@ -36,32 +33,56 @@ Segment <- function(l, s) {
   return(segments)
 }
 
+SegmentCorrelation <- function(x.seg, y.seg) {
+  temp <- stats::cor.test(x.seg, y.seg)
 
-#' Find the segmentation size.
-#'
-#' Identify a segment size that yields at least 5 record.
-#' @param l An integer.
-#' @param refine Optional. Default value 0.5. Increase the value to increase
-#' the granularity of local correlation computation.
-#' @return A floating number \code{s} between 0 and 1.
-#' @export
-#' @examples
-#' FindSegmentSize(l = 100, refine = 0.9)
-#'
-FindSegmentSize <- function(l, refine) {
-  s <- 0.05 * (1 - refine)
-  seg.size <- floor(s * l)
-
-  segmentAdjusted <- F
-  while(seg.size < 5) {
-    segmentAdjusted <- T
-    s <- s + 0.05 * (1 - refine)
-    seg.size <- floor(s * l)
-  }
-
-  if(segmentAdjusted) {
-    warning("Refinement too high or data is small. Adjusting computation.")
-  }
-  return(s)
+  segmentCorrelation <- list(cor = ifelse(is.na(temp$estimate[[1]]),
+                                          0,
+                                          temp$estimate[[1]]),
+                             p.value = ifelse(is.na(temp$estimate[[1]]),
+                                              1,
+                                              temp$estimate[[1]])
+  )
+  return(segmentCorrelation)
 }
 
+ValidateRefine <- function(l, refine) {
+  if(floor(refine * l) < 5) {
+    # Means too few data points in a segment.
+    # Therefore, increase it.
+    while(floor(refine * l) <= 5) {
+      refine <- refine + 0.01
+    }
+  }
+  return(refine)
+}
+
+UpdateDfFit <- function(seg, df, df.fit) {
+  fit <- stats::lm(y ~ x, data = df[seg, c("x", "y")])
+
+  # print(summary(fit))
+
+  if(length(summary(fit)$coefficients[, "Pr(>|t|)"]) == 2) {
+    fit.significance <- summary(fit)$coefficients[2, "Pr(>|t|)"]
+  } else {
+    fit.significance <- NA
+  }
+
+  # print(fit.significance)
+
+  if(is.na(fit.significance) | fit.significance > 0.01) {
+    # TODO: Make the pvalue threshold of 0.01 adjusted as per Bonferroni
+    # When the fit is not statistically significant.
+    df.fit <- rbind(df.fit,
+                    data.frame(x = df[seg, "x"],
+                               fit = NA))  # Adding the fitted values as NA for plotting because no real correlation exist here.
+  } else {
+    # Fit is statistically significant.
+    df.fit <- rbind(df.fit,
+                    data.frame(x = df[seg, "x"],
+                               fit = fit$fitted))  # Adding the fitted values for plotting.
+    df.fit[seg[length(seg)], "fit"] <- NA  # Last point set to NA for plotting beautification. It results into disjoint lines. Otherwise, the plot is ugly with several cliffs.
+  }
+
+  return(df.fit)
+}

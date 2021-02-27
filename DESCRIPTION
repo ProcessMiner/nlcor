@@ -1,12 +1,12 @@
 Package: nlcor
 Type: Package
 Title: Compute Nonlinear Correlations
-Version: 1.3.2
+Version: 2.0
 Authors@R: c(
     person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
     person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
     )
-Description: PlotNlcor function updated to resolve a bug when fitting model for the last segment
+Description: Nlcor v2.0 uses a dynamic partitioning approach with adaptive segmentation for a more precise nonlinear correlation estimation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -18,6 +18,6 @@ Suggests:
     reshape2,
     knitr,
     rmarkdown
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: R (>= 3.0.1)
 VignetteBuilder: knitr

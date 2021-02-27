@@ -166,18 +166,17 @@ Under default settings, the output of `nlcor` will be,
 
 <img src="README_files/figure-markdown_strict/Figure-3.2-1.png">
 
-As can be seen in the figure, `nlcor` overlooked some of the local
-relationships. We can refine the correlation estimation by changing the
-`refine` parameter. The default value of `refine` is set as 0.5. It can
-be set as any value between `0` and `1`. A higher value enforces higher
-refinement. However, higher refinement adversely affects the p value.
-Meaning, the resultant correlation estimate may be statistically
-insignificant (similar to overfitting). Therefore, it is recommended to
-avoid over refinement.
+As can be seen in the figure, `nlcor` overlooked some of the local relationships.
+We can refine the correlation estimation by changing the `refine` parameter. 
+It can be set as any 
+value between `0` and `1`. A lower value enforces higher refinement. However,
+higher refinement adversely affects the p value. Meaning, the resultant 
+correlation estimate may be statistically insignificant (similar to overfitting).
+Therefore, it is recommended to avoid over refinement.
 
-In this data, we rerun the correlation estimation with `refine = 0.9`.
+Typically, the `refine` should be less than `0.20`. In this data, we rerun the correlation estimation with `refine = 0.01`.
 
-    c <- nlcor(x3, y3, refine = 0.9, plt = T)
+    c <- nlcor(x3, y3, refine = 0.01, plt = T)
     c$cor.estimate
     #> [1] 0.8534956
     c$adjusted.p.value
