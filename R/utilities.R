@@ -78,7 +78,8 @@ UpdateDfFit <- function(seg, df, df.fit) {
     # When the fit is not statistically significant.
     df.fit <- rbind(df.fit,
                     data.frame(x = df[seg, "x"],
-                               fit = NA))  # Adding the fitted values as NA for plotting because no real correlation exist here.
+                               fit = fit$fitted))  # Adding the fitted values as NA for plotting because no real correlation exist here.
+    df.fit[seg[length(seg)], "fit"] <- NA  # Last point set to NA for plotting beautification. It results into disjoint lines. Otherwise, the plot is ugly with several cliffs.
   } else {
     # Fit is statistically significant.
     df.fit <- rbind(df.fit,
