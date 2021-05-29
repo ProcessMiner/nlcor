@@ -1,12 +1,12 @@
 Package: nlcor
 Type: Package
 Title: Compute Nonlinear Correlations
-Version: 2.0
+Version: 2.1
 Authors@R: c(
     person("Chitta", "Ranjan", email = "cranjan@processminer.com", role = c("aut", "cre")),
     person("Vahab", "Najari", email = "vnajari@processminer.com", role = c("aut"))
     )
-Description: Nlcor v2.0 uses a dynamic partitioning approach with adaptive segmentation for a more precise nonlinear correlation estimation.
+Description: Nlcor v2.x uses a dynamic partitioning approach with adaptive segmentation for a more precise nonlinear correlation estimation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
