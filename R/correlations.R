@@ -76,6 +76,7 @@ nlcor <- function(x,
     # If plot output is required
     cor.plot <- PlotNlcor(df = data.frame(x, y),
                           segments = bestOptimalSegments,
+                          pvalue = bestPvalue,
                           line_thickness = line_thickness,
                           line_opacity = line_opacity,
                           title = chart_title)
