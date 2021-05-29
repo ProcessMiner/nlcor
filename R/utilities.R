@@ -22,7 +22,7 @@ Segment <- function(l, s) {
 
   if(l %% windowLen != 0) {
     seg <- low:l
-    if(length(seg) <= 5) {
+    if(length(seg) <= 3) {
       # Merge with the last segment
       segments[[length(segments)]] <- c(segments[[length(segments)]], seg)
     } else {
