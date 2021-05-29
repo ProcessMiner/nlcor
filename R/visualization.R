@@ -1,5 +1,6 @@
 PlotNlcor <- function(df,
                       segments,
+                      pvalue,
                       line_thickness = 1,
                       line_opacity = 1,
                       title = NA) {
@@ -20,13 +21,21 @@ PlotNlcor <- function(df,
     df.fit$fit <- mean(df[, "y"])
   }
 
+  # Configure line type based on its statistical significance
+  if(pvalue < 0.05) {
+    linetype = "solid"
+  } else {
+    linetype = "dashed"
+  }
+
   p <- ggplot2::ggplot() +
     ggplot2::geom_point(data = df, ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_line(data = df.fit, ggplot2::aes(x = x,
                                                    y = fit,
                                                    colour = "red"),
                        size = line_thickness,
-                       alpha = line_opacity) +
+                       alpha = line_opacity,
+                       linetype = linetype) +
     ggplot2::xlab("x") +
     ggplot2::ylab("y") +
     ggplot2::theme_bw() +
