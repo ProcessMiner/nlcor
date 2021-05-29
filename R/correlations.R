@@ -1,11 +1,13 @@
 #' Compute Nonlinear Correlation
 #'
-#' Compute nonlinear correlation using spatial sampling. Local linear
-#' correlations are computed at the samples and combined.
+#' Compute nonlinear correlation using adaptive spatial sampling.
 #' @param x A numeric vector. NAs are not allowed. The length of the vector should be more than 10.
-#' @param y A numeric vector. NAs are not allowed. Length should be same as x.
-#' @param refine Optional. Default value 0.5. Increase the value to increase
-#' the granularity of local correlation computation.
+#' @param y A numeric vector. NAs are not allowed. Length should be same as `x`. The order of
+#' `x` and `y` are relevant. `nlcor(x, y)`` is not equal to `nlcor(y, x)`. Therefore, `x`
+#' should be a causal and `y` should be a dependent variable.
+#' @param refine Optional. If manually set, a small value, e.g., 0.01, increases
+#' the granularity of local correlation computation. The runtime is faster if `refine` is manually set.
+#' Otherwise, the algorithm automatically finds the best refinement.
 #' @param plt Optional. Default value FALSE. Set TRUE to return ggplot2 object
 #' for the data correlation visualization.
 #' @param line_thickness Optional. Default 1. Thickness of the correlation lines. It is a float argument > 0.
@@ -23,116 +25,220 @@
 #' @examples
 #' library(nlcor)
 #' library(ggplot2)
-#' plot(x1, y1)
-#' c <- nlcor(x1, y1)
-#' c
-#' c <- nlcor(x2, y2, plt = TRUE)
-#' print(c$cor.plot)
-#' c <- nlcor(x3, y3, refine = 0.9, plt = TRUE)
-#' c$cor.estimate
-#' c$adjusted.p.value
-#' print(c$cor.plot)
+#' ncor <- nlcor(x1, y1)
+#' ncor <- nlcor(x2, y2, plt = TRUE)
+#' ncor <- nlcor(x3, y3, refine = 0.01, plt = TRUE)
 #'
-nlcor <- function(x, y, refine = 0.5, plt = F, line_thickness = 1, line_opacity = 1) {
+nlcor <- function(x,
+                  y,
+                  refine = NA,
+                  plt = T,
+                  line_thickness = 1,
+                  line_opacity = 1,
+                  chart_title = NA) {
 
-  if(refine >= 1.0) {
-    stop("Value of refine cannot be >= 1.0.")
-  }
+  # Initialization with linear correlation
+  linearCor <- cor.test(x, y)  # linear correlation
+  bestCor <- abs(linearCor$estimate[[1]])
+  bestPvalue <- round(linearCor$p.value, 2)
 
-  maxCor <- 0
-  adjusted.p.value <- NA
-  segment.cor <- NULL
-  best.s <- NULL
+  bestOptimalSegments <- list(1:length(x))  # The entire segment of data
 
-  s.size <- FindSegmentSize(l = length(x), refine = refine) # * refine
+  if(is.na(refine)) {
+    refinements <- seq(0.01, 0.15, 0.01)
 
-  for(s in seq(s.size, 1, s.size * (1 - refine))) {
-    sampleCor <- suppressWarnings(SampleCor(x, y, s))
-    netCor <- NetCor(cors = sampleCor$cor, pvalues = sampleCor$pvalue)
+    for(refine in refinements) {
+      greedyOutput <- NlcorGreedySearch(x = x,
+                                        y = y,
+                                        refine = refine)
 
-    if(netCor$cor.estimate > maxCor) {
-      maxCor <- netCor$cor.estimate
-      adjusted.p.value <- netCor$adjusted.p.value
-      segment.cor <- netCor$segment.cor
-      best.s <- s
+      if(round(greedyOutput$netCor$cor.estimate, 2) > round(bestCor, 2) &
+         round(greedyOutput$netCor$adjusted.p.value, 2) <= round(bestPvalue, 2)) {
+        # This nonlinear segmentation is better
+        # Store this output
+
+        bestCor <- greedyOutput$netCor$cor.estimate
+        bestPvalue <- greedyOutput$netCor$adjusted.p.value
+        bestOptimalSegments <- greedyOutput$optimalSegments
+        bestRefine <- refine
+      } else {
+        # Do nothing
+      }
     }
+  } else {
+    greedyOutput <- NlcorGreedySearch(x = x,
+                                      y = y,
+                                      refine = refine)
+    bestOptimalSegments <- greedyOutput$optimalSegments
   }
 
   if(plt) {
-    
-    if(maxCor == 0) {
-      cor.plot <- PlotData(x = x,
-                           y = y)
-    } else {
-      cor.plot <- PlotNlcor(x = x,
-                            y = y,
-                            segment.cor = segment.cor,
-                            s = best.s,
-                            line_thickness = line_thickness,
-                            line_opacity = line_opacity)
-    }
-    return(list(cor.estimate = maxCor,
-                adjusted.p.value = adjusted.p.value,
-                cor.plot = cor.plot
-                )
-          )
+    # If plot output is required
+    cor.plot <- PlotNlcor(df = data.frame(x, y),
+                          segments = bestOptimalSegments,
+                          line_thickness = line_thickness,
+                          line_opacity = line_opacity,
+                          title = chart_title)
+    print(cor.plot)
+
+
+    return(list(cor.estimate = bestCor,
+                adjusted.p.value = bestPvalue,
+                cor.plot = cor.plot))
   } else {
-    return(list(cor.estimate = maxCor,
-                adjusted.p.value = adjusted.p.value
-                )
-            )
+    return(list(cor.estimate = bestCor,
+                adjusted.p.value = bestPvalue
+    )
+    )
   }
 }
 
 
-#' Correlation from spatial sampling.
-#'
-#' Compute nonlinear correlation from local linear correlations
-#' at some spatial sampling
-#' @param x A numeric vector. NAs are not allowed.
-#' @param y A numeric vector. NAs are not allowed. Length should be same as x.
-#' @param s The sample size as percent of the vector length. A float number between 0 and 1.
-#' @return \code{list(cor, pvalue)} containing the correlations and its pvalue for each segment.
-#' @keywords sample
-#' @export
-#' @examples
-#' SampleCor(x, y, s = 0.2)
-#'
-SampleCor <- function(x, y, s) {
+NlcorGreedySearch <- function(x, y, refine = 0.05) {
 
+  # Storing the x,y vectors in a dataframe
   df <- data.frame(x, y)
-  df <- df[order(x), ] # We sort x to sample it spatially.
 
+  # Sorting by x to spatially sample the df afterwards.
+  # The nlcor output is different if the df(x,y) is sorted
+  # by y. Therefore, nlcor(x, y) <> nlcor(y, x).
+  df <- df[order(x), ]
+
+  # Initialization
   l <- length(x)
+  s <- ValidateRefine(l = l,
+                      refine = refine)
+  segments <- Segment(l = l,
+                      s = s)
 
-  segments <- Segment(l = l, s = s)
+  df.fit <- data.frame()
 
-  out <- list(cor = NULL,
-              pvalue = NULL)
+  # Empty initialization
+  segmentsCor <- list(cor = NULL,
+                      pvalue = NULL)
+  optimalSegments <- list()
+  last.segment.merged <- FALSE
 
-  for(seg in segments) {
-    segcor <- stats::cor.test(df$x[seg], df$y[seg])
-    out$cor <- c(out$cor, segcor$estimate[[1]])
-    out$pvalue <- c(out$pvalue, segcor$p.value)
+  seg <- segments[[1]]
+  optimalSegments[[1]] <- seg
+
+  if(length(segments) >= 2) {
+    for(i in 2:length(segments)) {
+
+      previous.optimal.segment.cor <- SegmentCorrelation(
+        df$x[optimalSegments[[length(optimalSegments)]]],
+        df$y[optimalSegments[[length(optimalSegments)]]])
+
+      current.segment.cor <- SegmentCorrelation(df$x[segments[[i]]],
+                                                df$y[segments[[i]]])
+
+      combined.segment.cor <- SegmentCorrelation(
+        df$x[c(optimalSegments[[length(optimalSegments)]],
+               segments[[i]])],
+        df$y[c(optimalSegments[[length(optimalSegments)]],
+               segments[[i]])])
+
+      merge.flag <- FALSE
+
+      if((sign(previous.optimal.segment.cor$cor) ==
+          sign(current.segment.cor$cor))) {
+        # Same direction.
+        if(current.segment.cor$p.value <= 0.05) {
+          # Check for current segment's statistical significance.
+          # Since the direction are same with statistical significance,
+          # we merge the segments.
+          merge.flag <- TRUE
+        } else {
+          # Check if combined correlation is higher and merge even if
+          # the same direction is not statistically significant to
+          # err in favor of fewer segments.
+          if((abs(combined.segment.cor$cor) >=
+              mean(abs(previous.optimal.segment.cor$cor),
+                   current.segment.cor$cor))) {
+            merge.flag <- TRUE
+          }
+        }
+      } else {
+        # Direction is opposite
+        if(current.segment.cor$p.value <= 0.05) {
+          # Check for current segment's statistical significance, if
+          # significant, do NOT merge.
+          merge.flag <- FALSE
+        } else {
+          # If there is no statistical significance, the change
+          # in direction could be due to noise. So check if combined
+          # correlation is higher and merge.
+          if((abs(combined.segment.cor$cor) >=
+              mean(abs(previous.optimal.segment.cor$cor),
+                   current.segment.cor$cor))) {
+            merge.flag <- TRUE
+          }
+        }
+      }
+
+      if(merge.flag) {
+        # The correlation directions are the same in segments i-1 and i.
+
+        # Merge the segments
+        seg <- c(optimalSegments[[length(optimalSegments)]], segments[[i]])
+        optimalSegments[[length(optimalSegments)]] <- seg
+
+        if(i == length(segments)) {
+          # Update the last segment is merged flag
+          last.segment.merged <- TRUE
+        }
+
+      } else { # Direction changes.
+        # Now work with the previously merged segments
+
+        # Populate the segmentwise correlation
+        segmentsCor <- UpdateSegmentsCor(x.seg = df$x[seg],
+                                         y.seg = df$y[seg],
+                                         segmentsCor = segmentsCor)
+
+        # Reset the segment
+        seg <- segments[[i]]
+        optimalSegments[[length(optimalSegments) + 1]] <- seg
+      }
+    }
+
+    # Look at the last segment if it still remains
+    if(last.segment.merged) {
+
+      # Populate the segmentwise correlation
+      segmentsCor <- UpdateSegmentsCor(x.seg = df$x[seg],
+                                       y.seg = df$y[seg],
+                                       segmentsCor = segmentsCor)
+
+    } else {
+      lastSeg <- segments[[length(segments)]]
+      optimalSegments[[length(optimalSegments) + 1]] <- lastSeg
+
+      # Now work with the last unmerged segment
+
+      # Populate the segmentwise correlation
+      segmentsCor <- UpdateSegmentsCor(x.seg = df$x[lastSeg],
+                                       y.seg = df$y[lastSeg],
+                                       segmentsCor = segmentsCor)
+
+    }
+
+  } else if(length(segments) == 1) {
+    # Populate the segmentwise correlation
+    segmentsCor <- UpdateSegmentsCor(x.seg = df$x[seg],
+                                     y.seg = df$y[seg],
+                                     segmentsCor = segmentsCor)
   }
-  return(out)
+
+  netCor <- NetCor(cors = segmentsCor$cor,
+                   pvalues = segmentsCor$pvalue,)
+
+  return(list(netCor = netCor,
+              optimalSegments = optimalSegments))
 }
 
 
-#' Find net correlation from the "linear" segments.
-#'
-#' Find net correlation from the "linear" segments.
-#' @param cors A vector correlations.
-#' @param pvalues A vector of pvalues corresponding to the correlations in the \code{cors} vector.
-#' @param p.threshold The overall threshold of p value, also known as the significance level.
-#' @return The net correlation estimate, \code{cor.estimate}, and a list containing
-#' the adjusted correlations and pvalues for each "linear" segment.
-#' @export
-#' @examples
-#' cors <- c(-0.70, 0.93, -0.79, 0.91)
-#' pvalues <- c(0.004, 0.0006, 0.0007, 0.009)
-#' NetCor(cors, pvalues)
-#'
+
 NetCor <- function(cors, pvalues, p.threshold = 0.05) {
   adjusted.p.threshold <- p.threshold / length(cors)
 

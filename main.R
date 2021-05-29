@@ -17,7 +17,7 @@ nonlinear.cor <- nlcor(x3, y3, plt = T)
 print(nonlinear.cor)
 
 # Refine argument
-nonlinear.cor <- nlcor(x3, y3, refine = 0.9, plt = T)
+nonlinear.cor <- nlcor(x3, y3, refine = 0.01, plt = T)
 print(nonlinear.cor)
 
 # Correlation line arguments
