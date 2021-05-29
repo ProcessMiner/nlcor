@@ -243,7 +243,7 @@ NetCor <- function(cors, pvalues, p.threshold = 0.05) {
   adjusted.p.threshold <- p.threshold / length(cors)
 
   for(i in 1:length(cors)) {
-    if(pvalues[i] > adjusted.p.threshold || is.na(pvalues[i])) {
+    if(is.na(pvalues[i])) {
       pvalues[i] <- NA
       cors[i] <- 0
     }
