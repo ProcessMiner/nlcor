@@ -1,3 +1,5 @@
+MIN_SEGMENT_SIZE <- 3
+
 UpdateSegmentsCor <- function(x.seg, y.seg, segmentsCor) {
   segcor <- stats::cor.test(x.seg, y.seg)
   segmentsCor$cor <- c(segmentsCor$cor, segcor$estimate[[1]])
@@ -22,7 +24,7 @@ Segment <- function(l, s) {
 
   if(l %% windowLen != 0) {
     seg <- low:l
-    if(length(seg) <= 3) {
+    if(length(seg) <= MIN_SEGMENT_SIZE) {
       # Merge with the last segment
       segments[[length(segments)]] <- c(segments[[length(segments)]], seg)
     } else {
@@ -47,10 +49,11 @@ SegmentCorrelation <- function(x.seg, y.seg) {
 }
 
 ValidateRefine <- function(l, refine) {
-  if(floor(refine * l) < 5) {
+
+  if(floor(refine * l) < MIN_SEGMENT_SIZE) {
     # Means too few data points in a segment.
     # Therefore, increase it.
-    while(floor(refine * l) <= 5) {
+    while(floor(refine * l) <= MIN_SEGMENT_SIZE) {
       refine <- refine + 0.01
     }
   }
