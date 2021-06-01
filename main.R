@@ -23,3 +23,4 @@ print(nonlinear.cor)
 # Correlation line arguments
 nonlinear.cor <- nlcor(x1, y1, plt = T, line_thickness = 2.5, line_opacity = 0.8)
 print(nonlinear.cor$cor.plot)
+

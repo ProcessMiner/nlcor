@@ -232,7 +232,9 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
   }
 
   netCor <- NetCor(cors = segmentsCor$cor,
-                   pvalues = segmentsCor$pvalue,)
+                   pvalues = segmentsCor$pvalue,
+                   segments = optimalSegments,
+                   datasize = l)
 
   return(list(netCor = netCor,
               optimalSegments = optimalSegments))
@@ -240,18 +242,24 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
 
 
 
-NetCor <- function(cors, pvalues, p.threshold = 0.05) {
-  adjusted.p.threshold <- p.threshold / length(cors)
+NetCor <- function(cors, pvalues, segments, datasize) {
+
+  netCor <- 0
+  netPValueTmp <- 1
 
   for(i in 1:length(cors)) {
-    if(is.na(pvalues[i])) {
-      pvalues[i] <- NA
-      cors[i] <- 0
+    if(!is.na(pvalues[i])) {
+
+      netCor <- netCor + (length(segments[[i]]) / datasize) * cors[i]
+      netPValueTmp <- netPValueTmp *
+        (length(segments[[i]]) / datasize) *
+        (1 - pvalues[i])
+
     }
   }
 
-  return(list(cor.estimate = mean(abs(cors)),
-              adjusted.p.value = 1- prod((1 - pvalues), na.rm = T),  # Approximation of p-value assuming segment independence
+  return(list(cor.estimate = netCor,
+              adjusted.p.value = 1 - netPValueTmp,  # Approximation of p-value assuming segment independence
               segment.cor = list(cor = cors,
                                  p.value = pvalues)))
 }
