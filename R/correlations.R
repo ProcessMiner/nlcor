@@ -250,7 +250,7 @@ NetCor <- function(cors, pvalues, segments, datasize) {
   for(i in 1:length(cors)) {
     if(!is.na(pvalues[i])) {
 
-      netCor <- netCor + (length(segments[[i]]) / datasize) * cors[i]
+      netCor <- netCor + (length(segments[[i]]) / datasize) * abs(cors[i])
       netPValueTmp <- netPValueTmp *
         (length(segments[[i]]) / datasize) *
         (1 - pvalues[i])
