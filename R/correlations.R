@@ -154,8 +154,8 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
           # the same direction is not statistically significant to
           # err in favor of fewer segments.
           if((abs(combined.segment.cor$cor) >=
-              mean(abs(previous.optimal.segment.cor$cor),
-                   current.segment.cor$cor))) {
+              mean(c(abs(previous.optimal.segment.cor$cor),
+                   abs(current.segment.cor$cor))) {
             merge.flag <- TRUE
           }
         }
@@ -170,8 +170,8 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
           # in direction could be due to noise. So check if combined
           # correlation is higher and merge.
           if((abs(combined.segment.cor$cor) >=
-              mean(abs(previous.optimal.segment.cor$cor),
-                   current.segment.cor$cor))) {
+              mean(c(abs(previous.optimal.segment.cor$cor),
+                   abs(current.segment.cor$cor))) {
             merge.flag <- TRUE
           }
         }
