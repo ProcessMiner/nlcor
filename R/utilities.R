@@ -41,9 +41,9 @@ SegmentCorrelation <- function(x.seg, y.seg) {
   segmentCorrelation <- list(cor = ifelse(is.na(temp$estimate[[1]]),
                                           0,
                                           temp$estimate[[1]]),
-                             p.value = ifelse(is.na(temp$estimate[[1]]),
+                             p.value = ifelse(is.na(temp$p.value[[1]]),
                                               1,
-                                              temp$estimate[[1]])
+                                              temp$p.value[[1]])
   )
   return(segmentCorrelation)
 }

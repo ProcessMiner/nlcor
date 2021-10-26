@@ -87,7 +87,7 @@ correlation using `nlcor`.
     #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
     #> high or data is small. Adjusting computation.
     c$cor.estimate
-    #> [1] 0.8969659
+    #> [1] 0.8825653
     c$adjusted.p.value
     #> [1] 0
     print(c$cor.plot)
@@ -123,7 +123,7 @@ We estimate the nonlinear correlation using `nlcor`.
     #> Warning in FindSegmentSize(l = length(x), refine = refine): Refinement too
     #> high or data is small. Adjusting computation.
     c$cor.estimate
-    #> [1] 0.897205
+    #> [1] 0.8960923
     c$adjusted.p.value
     #> [1] 0
     print(c$cor.plot)
@@ -158,9 +158,9 @@ Under default settings, the output of `nlcor` will be,
 
     c <- nlcor(x3, y3, plt = T)
     c$cor.estimate
-    #> [1] 0.8534956
+    #> [1] 0.85456
     c$adjusted.p.value
-    #> [1] 2.531456e-06
+    #> [1] 0.00441262
     print(c$cor.plot)
     #> Warning: Removed 148 rows containing missing values (geom_path).
 
@@ -178,9 +178,9 @@ Typically, the `refine` should be less than `0.20`. In this data, we rerun the c
 
     c <- nlcor(x3, y3, refine = 0.01, plt = T)
     c$cor.estimate
-    #> [1] 0.8534956
+    #> [1]  0.1337304
     c$adjusted.p.value
-    #> [1] 2.531456e-06
+    #> [1] 0
     print(c$cor.plot)
     #> Warning: Removed 148 rows containing missing values (geom_path).
 
