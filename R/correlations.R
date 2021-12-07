@@ -83,12 +83,12 @@ nlcor <- function(x,
     print(cor.plot)
 
 
-    return(list(cor.estimate = bestCor,
-                adjusted.p.value = bestPvalue,
+    return(list(cor.estimate = greedyOutput$netCor$cor.estimate,
+                adjusted.p.value = greedyOutput$netCor$adjusted.p.value,
                 cor.plot = cor.plot))
   } else {
-    return(list(cor.estimate = bestCor,
-                adjusted.p.value = bestPvalue
+    return(list(cor.estimate = greedyOutput$netCor$cor.estimate,
+                adjusted.p.value = greedyOutput$netCor$adjusted.p.value
     )
     )
   }
