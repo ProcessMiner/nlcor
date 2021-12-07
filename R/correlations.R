@@ -107,9 +107,10 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
 
   # Initialization
   l <- length(x)
+  refine_selected = refine
   s <- ValidateRefine(l = l,
                       refine = refine)
-  if (s == refine){
+  if (s == refine_selected){
     print("Number of data points remain same as refine.")
   } else {
     print("Too less data points with the refine selected. ")
