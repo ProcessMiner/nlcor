@@ -28,7 +28,7 @@
 #' ncor <- nlcor(x1, y1)
 #' ncor <- nlcor(x2, y2, plt = TRUE)
 #' ncor <- nlcor(x3, y3, refine = 0.01, plt = TRUE)
-#'
+
 nlcor <- function(x,
                   y,
                   refine = NA,
