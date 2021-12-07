@@ -109,6 +109,13 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
   l <- length(x)
   s <- ValidateRefine(l = l,
                       refine = refine)
+  if (s == refine){
+    print("Number of data points remain same as refine.")
+  } else {
+    print("Too less data points with the refine selected. ")
+    print("New refine selected = ",s)
+  }
+    
   segments <- Segment(l = l,
                       s = s)
 
