@@ -220,6 +220,6 @@ Support
 
 Chitta Ranjan <cranjan@processminer.com>
 
-Vahab Najari <vnajari@processminer.com>
+Devleena Banerjee <dbanerjee@processminer.com>
 
 Visit &lt;www.processminer.com&gt; for further information.
