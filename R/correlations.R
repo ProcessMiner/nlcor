@@ -28,7 +28,7 @@
 #' ncor <- nlcor(x1, y1)
 #' ncor <- nlcor(x2, y2, plt = TRUE)
 #' ncor <- nlcor(x3, y3, refine = 0.01, plt = TRUE)
-#'
+
 nlcor <- function(x,
                   y,
                   refine = NA,
@@ -83,12 +83,12 @@ nlcor <- function(x,
     print(cor.plot)
 
 
-    return(list(cor.estimate = bestCor,
-                adjusted.p.value = bestPvalue,
+    return(list(cor.estimate = greedyOutput$netCor$cor.estimate,
+                adjusted.p.value = greedyOutput$netCor$adjusted.p.value,
                 cor.plot = cor.plot))
   } else {
-    return(list(cor.estimate = bestCor,
-                adjusted.p.value = bestPvalue
+    return(list(cor.estimate = greedyOutput$netCor$cor.estimate,
+                adjusted.p.value = greedyOutput$netCor$adjusted.p.value
     )
     )
   }
@@ -109,6 +109,7 @@ NlcorGreedySearch <- function(x, y, refine = 0.05) {
   l <- length(x)
   s <- ValidateRefine(l = l,
                       refine = refine)
+    
   segments <- Segment(l = l,
                       s = s)
 
